@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Torneo de Just Dance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f3ff; --card:#ffffff; --ink:#1a1046; --muted:#5d5588; --line:#c9bfee;
+  --acento:#e6167a; --acento-ink:#ffffff; --hueco:#efe9ff;
+  --display:"Bricolage Grotesque","Trebuchet MS",Arial,sans-serif;
+  --cuerpo:"Figtree","Segoe UI",Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#140b38; --card:#221656; --ink:#ffffff; --muted:#bdb4ea; --line:#4b3d94;
+    --acento:#ff4d9d; --acento-ink:#1a1046; --hueco:#1b1049;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#140b38; --card:#221656; --ink:#ffffff; --muted:#bdb4ea; --line:#4b3d94;
+  --acento:#ff4d9d; --acento-ink:#1a1046; --hueco:#1b1049;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.5 var(--cuerpo);min-height:100vh}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--acento);outline-offset:2px}
+
+.envoltura{max-width:1400px;margin:0 auto;padding:20px clamp(14px,3vw,36px) 48px}
+
+/* Encabezado */
+.cabecera{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+.titulo{
+  font:800 clamp(2rem,5.5vw,4rem)/1.05 var(--display);letter-spacing:-.02em;
+  background:transparent;border:0;border-bottom:3px dashed transparent;padding:4px 0;width:min(100%,900px);
+}
+.titulo:hover,.titulo:focus{border-bottom-color:var(--line)}
+.acciones{display:flex;gap:10px;flex-wrap:wrap}
+.franja{display:flex;height:12px;border-radius:99px;overflow:hidden;margin:10px 0 26px;background:var(--line)}
+.franja span{flex:1;min-width:3px}
+
+/* Botones */
+.btn{
+  border:2px solid var(--ink);background:transparent;padding:10px 18px;border-radius:10px;
+  font-weight:700;cursor:pointer;min-height:44px;
+}
+.btn:hover:not(:disabled){background:var(--hueco)}
+.btn.principal{background:var(--acento);border-color:var(--acento);color:var(--acento-ink)}
+.btn.principal:hover:not(:disabled){filter:brightness(1.08);background:var(--acento)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.peligro[data-pend]{border-color:var(--acento);color:var(--acento)}
+
+/* Inscripción */
+.inscripcion{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:28px;align-items:start}
+@media (max-width:820px){.inscripcion{grid-template-columns:1fr}}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:22px}
+.panel h2{font:800 1.5rem/1.2 var(--display);margin:0 0 14px}
+.agregar{display:flex;gap:10px}
+.agregar input{
+  flex:1;min-width:0;padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:var(--bg);font-size:1.1rem
+}
+.agregar input:focus{border-color:var(--acento);outline:none}
+.aviso{min-height:1.5em;margin:8px 0 0;color:var(--acento);font-weight:600}
+.ayuda{color:var(--muted);margin:0 0 6px;font-size:.95rem}
+.lista{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
+.lista li{display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:10px;padding:6px 8px 6px 0;border-left:10px solid var(--c);overflow:hidden}
+.lista input{flex:1;min-width:0;background:transparent;border:2px solid transparent;border-radius:8px;padding:8px 10px;font-weight:600;font-size:1.05rem}
+.lista input:hover{border-color:var(--line)}
+.lista input:focus{border-color:var(--acento);outline:none}
+.quitar{background:transparent;border:0;color:var(--muted);cursor:pointer;padding:8px 10px;border-radius:8px;font-weight:600}
+.quitar:hover{color:var(--acento);background:var(--hueco)}
+.vacio{color:var(--muted);margin:14px 0 0;padding:18px;border:2px dashed var(--line);border-radius:12px;text-align:center}
+.resumen dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:10px 16px}
+.resumen dt{color:var(--muted)}
+.resumen dd{margin:0;font:800 1.6rem/1 var(--display);text-align:right}
+.resumen .nota{margin:18px 0 0;padding-top:14px;border-top:2px solid var(--line);color:var(--muted);font-size:.95rem}
+.resumen .btn{width:100%;margin-top:18px}
+
+/* Llaves */
+.estado{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;align-items:center;margin-bottom:18px}
+.estado p{margin:0;font-weight:700;font-size:1.15rem}
+.estado span{color:var(--muted);font-weight:400}
+.campeon{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px 28px;margin-bottom:26px;padding:22px 26px;
+  background:var(--card);border:2px solid var(--line);border-left:16px solid var(--c);border-radius:16px;
+}
+.campeon .rotulo{color:var(--muted);font-weight:600;width:100%}
+.campeon .ganador{font:800 clamp(2.2rem,7vw,5rem)/1 var(--display);letter-spacing:-.02em;overflow-wrap:anywhere}
+.campeon.nuevo{animation:barrido .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes barrido{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){.campeon.nuevo{animation:none}}
+
+.llaves{display:flex;gap:48px;align-items:stretch;overflow-x:auto;padding:6px 4px 26px}
+.ronda{flex:0 0 250px;display:flex;flex-direction:column}
+.ronda h3{font:800 1.15rem/1.2 var(--display);margin:0 0 10px;min-height:1.4em}
+.casillas{flex:1;display:flex;flex-direction:column}
+.casilla{flex:1;display:flex;align-items:center;position:relative;padding:10px 0}
+.cruce{position:relative;width:100%}
+.cuerpo{background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden}
+.fila{
+  display:flex;align-items:center;gap:10px;width:100%;padding:12px 14px;border:0;border-left:10px solid var(--c,var(--line));
+  background:transparent;text-align:left;font-weight:600;font-size:1.05rem;line-height:1.2;cursor:pointer;min-height:48px;
+}
+.fila+.fila{border-top:2px solid var(--line)}
+.fila .nombre{flex:1;overflow-wrap:anywhere}
+.fila .marca{font-weight:800;color:var(--ink)}
+.fila:hover:not(:disabled){background:color-mix(in srgb,var(--c) 16%,transparent)}
+.fila:disabled{cursor:default}
+.fila.gana{background:color-mix(in srgb,var(--c) 26%,var(--card));font-weight:800}
+.fila.pierde{opacity:.5}
+.fila.vacia{--c:var(--line);color:var(--muted);font-weight:400;cursor:default;background:var(--hueco)}
+.fila:focus-visible{outline-offset:-3px}
+
+/* Conectores */
+.casilla::after{content:"";position:absolute;right:-24px;width:24px;top:50%;border-top:2px solid var(--line)}
+.casilla:nth-child(odd)::before{content:"";position:absolute;right:-24px;top:50%;bottom:0;border-right:2px solid var(--line)}
+.casilla:nth-child(even)::before{content:"";position:absolute;right:-24px;top:0;bottom:50%;border-right:2px solid var(--line)}
+.ronda:last-child .casilla::before,.ronda:last-child .casilla::after{display:none}
+.ronda:not(:first-child) .cruce::before{content:"";position:absolute;left:-24px;width:24px;top:50%;border-top:2px solid var(--line)}
+
+/* Canciones y ruleta */
+.canciones{grid-column:1/-1}
+textarea{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:400 1.05rem/1.5 var(--cuerpo);resize:vertical}
+textarea:focus{border-color:var(--acento);outline:none}
+.ruleta{margin-bottom:24px}
+.ruleta>summary{font:800 1.5rem/1.2 var(--display);cursor:pointer}
+.ruleta-cuerpo{display:flex;flex-wrap:wrap;gap:24px 44px;align-items:center;margin-top:18px}
+.rueda-caja{position:relative;width:min(340px,80vw);aspect-ratio:1;flex:0 0 auto}
+.rueda-caja svg{width:100%;height:100%;display:block}
+.puntero{position:absolute;top:-6px;left:50%;transform:translateX(-50%);z-index:2;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:32px solid var(--ink)}
+.ruleta-ctrl{flex:1;min-width:260px;display:grid;gap:14px;justify-items:start}
+.cancion{font:800 clamp(1.6rem,4vw,2.8rem)/1.1 var(--display);margin:0;overflow-wrap:anywhere}
+.cancion.vacia{font:400 1.05rem/1.5 var(--cuerpo);color:var(--muted)}
+.check{display:flex;gap:10px;align-items:center;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--acento)}
+.editar{width:100%}
+.editar summary{cursor:pointer;font-weight:700;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="envoltura">
+  <header>
+    <div class="cabecera">
+      <input id="nombre" class="titulo" type="text" maxlength="50" aria-label="Nombre del torneo" value="Torneo Just Dance">
+      <div class="acciones">
+        <button id="btnReiniciar" class="btn peligro" type="button" hidden>Reiniciar resultados</button>
+        <button id="btnEditar" class="btn peligro" type="button" hidden>Editar participantes</button>
+      </div>
+    </div>
+    <div id="franja" class="franja" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <!-- Vista 1: inscripción -->
+    <section id="vistaInscripcion" class="inscripcion" aria-label="Inscripción de participantes">
+      <div class="panel">
+        <h2>Participantes</h2>
+        <div class="agregar">
+          <input id="nuevo" type="text" maxlength="24" placeholder="Nombre o apodo" aria-label="Nombre o apodo del participante" autocomplete="off">
+          <button id="btnAgregar" class="btn principal" type="button">Agregar</button>
+        </div>
+        <p id="aviso" class="aviso" role="status" aria-live="polite"></p>
+        <p class="ayuda">Los cruces siguen el orden de la lista. Usa Mezclar para sortearlos. Puedes cambiar un nombre tocándolo.</p>
+        <ul id="lista" class="lista"></ul>
+        <p id="vacio" class="vacio">Aún no hay participantes. Escribe un nombre y presiona Agregar.</p>
+        <div style="margin-top:16px"><button id="btnMezclar" class="btn" type="button">Mezclar</button></div>
+      </div>
+
+      <aside class="panel resumen" aria-label="Resumen de las llaves">
+        <h2>Así quedarían las llaves</h2>
+        <dl>
+          <dt>Participantes</dt><dd id="rNum">0</dd>
+          <dt>Rondas</dt><dd id="rRondas">0</dd>
+          <dt>Cruces en la primera ronda</dt><dd id="rCruces">0</dd>
+          <dt>Pases libres</dt><dd id="rLibres">0</dd>
+        </dl>
+        <p id="rNota" class="nota"></p>
+        <button id="btnIniciar" class="btn principal" type="button" disabled>Iniciar torneo</button>
+      </aside>
+
+      <div class="panel canciones">
+        <h2>Canciones para la ruleta</h2>
+        <p class="ayuda">Opcional. Escribe una canción por línea o pega una lista completa (máximo 60).</p>
+        <textarea id="txtCanciones" rows="7" aria-label="Lista de canciones, una por línea" placeholder="Una canción por línea. Por ejemplo:&#10;Canción 1&#10;Canción 2&#10;Canción 3"></textarea>
+        <p id="cuentaCanciones" class="ayuda" style="margin-top:8px"></p>
+      </div>
+    </section>
+
+    <!-- Vista 2: llaves -->
+    <section id="vistaLlaves" aria-label="Llaves del torneo" hidden>
+      <details id="ruleta" class="panel ruleta" open>
+        <summary>Ruleta de canciones</summary>
+        <div class="ruleta-cuerpo">
+          <div class="rueda-caja">
+            <div class="puntero" aria-hidden="true"></div>
+            <svg id="rueda" viewBox="-160 -160 320 320" role="img" aria-label="Ruleta de canciones"></svg>
+          </div>
+          <div class="ruleta-ctrl">
+            <button id="btnGirar" class="btn principal" type="button">Girar ruleta</button>
+            <p id="cancionActual" class="cancion vacia" aria-live="polite">Aún no ha salido ninguna canción.</p>
+            <p id="avisoRuleta" class="aviso" role="status" aria-live="polite"></p>
+            <label class="check"><input type="checkbox" id="chkRepetir"> No repetir las canciones que ya salieron</label>
+            <button id="btnReiniciarRuleta" class="btn" type="button">Reiniciar ruleta</button>
+            <details class="editar">
+              <summary>Editar lista de canciones</summary>
+              <textarea id="txtCanciones2" rows="6" aria-label="Lista de canciones, una por línea" placeholder="Una canción por línea"></textarea>
+            </details>
+          </div>
+        </div>
+      </details>
+
+      <div id="campeon" class="campeon" hidden></div>
+      <div class="estado"><p id="progreso"></p></div>
+      <div id="llaves" class="llaves"></div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  var COLORES=['#ff2e88','#ffb400','#18c5b8','#7c5cff','#ff6b35','#3ddc84','#00a8ff','#e63946'];
+  var CLAVE='jd-torneo-llaves';
+  var MIN=4, MAX=32;
+
+  function cargar(){
+    try{
+      var s=localStorage.getItem(CLAVE); if(!s) return null;
+      var o=JSON.parse(s);
+      if(!o||!Array.isArray(o.jugadores)) return null;
+      return o;
+    }catch(e){return null}
+  }
+  function guardar(){ try{localStorage.setItem(CLAVE,JSON.stringify(estado))}catch(e){} }
+
+  var estado=cargar()||{nombre:'Torneo Just Dance',jugadores:[],rondas:null,sig:1};
+  if(!Array.isArray(estado.canciones)) estado.canciones=[];
+  if(!Array.isArray(estado.usadas)) estado.usadas=[];
+  if(typeof estado.sinRepetir!=='boolean') estado.sinRepetir=true;
+  if(typeof estado.ultima!=='string') estado.ultima='';
+  var campeonPrevio=null;
+
+  var $=function(id){return document.getElementById(id)};
+  var el={
+    nombre:$('nombre'),franja:$('franja'),nuevo:$('nuevo'),btnAgregar:$('btnAgregar'),aviso:$('aviso'),
+    lista:$('lista'),vacio:$('vacio'),btnMezclar:$('btnMezclar'),btnIniciar:$('btnIniciar'),
+    rNum:$('rNum'),rRondas:$('rRondas'),rCruces:$('rCruces'),rLibres:$('rLibres'),rNota:$('rNota'),
+    vIns:$('vistaInscripcion'),vLl:$('vistaLlaves'),campeon:$('campeon'),progreso:$('progreso'),llaves:$('llaves'),
+    btnReiniciar:$('btnReiniciar'),btnEditar:$('btnEditar'),
+    txt1:$('txtCanciones'),txt2:$('txtCanciones2'),cuenta:$('cuentaCanciones'),
+    rueda:$('rueda'),btnGirar:$('btnGirar'),cancionActual:$('cancionActual'),avisoRuleta:$('avisoRuleta'),
+    chk:$('chkRepetir'),btnReiniciarRuleta:$('btnReiniciarRuleta')
+  };
+
+  function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+  function porId(id){for(var i=0;i<estado.jugadores.length;i++){if(estado.jugadores[i].id===id)return estado.jugadores[i]}return null}
+  function aviso(t){el.aviso.textContent=t||''}
+
+  /* ---------- Lógica de llaves ---------- */
+  function ordenSiembra(n){
+    var o=[1];
+    while(o.length<n){
+      var t=o.length*2+1, sig=[];
+      o.forEach(function(x){sig.push(x,t-x)});
+      o=sig;
+    }
+    return o;
+  }
+  function tamano(n){var t=2;while(t<n)t*=2;return t}
+
+  function generar(){
+    var J=estado.jugadores, tam=tamano(J.length), orden=ordenSiembra(tam);
+    var casillas=orden.map(function(s){return s<=J.length?J[s-1].id:null});
+    var r0=[];
+    for(var i=0;i<tam;i+=2){
+      var a=casillas[i], b=casillas[i+1];
+      r0.push({a:a,b:b,g:(a&&!b)?a:(b&&!a)?b:null,libre:!a||!b});
+    }
+    var R=[r0], m=tam/4;
+    while(m>=1){
+      var ronda=[];
+      for(var k=0;k<m;k++) ronda.push({a:null,b:null,g:null,libre:false});
+      R.push(ronda); m=m/2;
+    }
+    estado.rondas=R;
+    recalcular();
+  }
+
+  function recalcular(){
+    var R=estado.rondas;
+    for(var r=1;r<R.length;r++){
+      for(var i=0;i<R[r].length;i++){
+        var m=R[r][i];
+        m.a=R[r-1][2*i].g; m.b=R[r-1][2*i+1].g;
+        if(m.g!==null && m.g!==m.a && m.g!==m.b) m.g=null;
+      }
+    }
+  }
+
+  function campeonId(){
+    var R=estado.rondas; if(!R) return null;
+    return R[R.length-1][0].g;
+  }
+
+  function nombreRonda(r,total){
+    var faltan=total-r;
+    if(faltan===1) return 'Final';
+    if(faltan===2) return 'Semifinal';
+    if(faltan===3) return 'Cuartos de final';
+    if(faltan===4) return 'Octavos de final';
+    if(faltan===5) return 'Dieciseisavos de final';
+    return 'Ronda '+(r+1);
+  }
+
+  /* ---------- Pintado ---------- */
+  function pintarFranja(){
+    var J=estado.jugadores;
+    el.franja.innerHTML=J.map(function(j){return '<span style="background:'+j.color+'"></span>'}).join('');
+  }
+
+  function pintarLista(){
+    var J=estado.jugadores;
+    el.lista.innerHTML=J.map(function(j,k){
+      return '<li style="--c:'+j.color+'"><input type="text" maxlength="24" value="'+esc(j.nombre)+'" data-id="'+j.id+'" aria-label="Nombre del participante '+(k+1)+'"><button type="button" class="quitar" data-id="'+j.id+'">Quitar</button></li>';
+    }).join('');
+    el.vacio.hidden=J.length>0;
+    el.btnMezclar.disabled=J.length<2;
+    pintarResumen();
+    pintarFranja();
+  }
+
+  function pintarResumen(){
+    var n=estado.jugadores.length;
+    var tam=n>=2?tamano(n):0;
+    var libres=tam?tam-n:0;
+    var rondas=tam?Math.round(Math.log(tam)/Math.LN2):0;
+    el.rNum.textContent=n;
+    el.rRondas.textContent=rondas;
+    el.rCruces.textContent=tam?(tam/2-libres):0;
+    el.rLibres.textContent=libres;
+    if(n<MIN){
+      el.rNota.textContent='Faltan '+(MIN-n)+' participante'+((MIN-n)===1?'':'s')+' para poder iniciar (mínimo '+MIN+').';
+    }else if(libres>0){
+      el.rNota.textContent=libres+' participante'+(libres===1?' pasa':'s pasan')+' directo a la segunda ronda. Los pases libres van a los primeros de la lista.';
+    }else{
+      el.rNota.textContent='Todos bailan desde la primera ronda.';
+    }
+    el.btnIniciar.disabled=n<MIN;
+  }
+
+  function fila(r,i,m,id){
+    var j=id?porId(id):null;
+    if(!j){
+      return '<div class="fila vacia"><span class="nombre">'+(m.libre&&r===0?'Pase libre':'Por definir')+'</span></div>';
+    }
+    var gana=m.g===id, pierde=m.g!==null&&m.g!==id;
+    var activo=m.a&&m.b&&!m.libre;
+    return '<button type="button" class="fila'+(gana?' gana':'')+(pierde?' pierde':'')+'" style="--c:'+j.color+'" '+
+      (activo?'':'disabled ')+'data-r="'+r+'" data-i="'+i+'" data-id="'+id+'" aria-pressed="'+gana+'">'+
+      '<span class="nombre">'+esc(j.nombre)+'</span><span class="marca">'+(gana?'✓':'')+'</span></button>';
+  }
+
+  function pintarLlaves(){
+    var R=estado.rondas, total=R.length;
+    el.llaves.innerHTML=R.map(function(ronda,r){
+      var casillas=ronda.map(function(m,i){
+        return '<div class="casilla"><div class="cruce"><div class="cuerpo">'+fila(r,i,m,m.a)+fila(r,i,m,m.b)+'</div></div></div>';
+      }).join('');
+      return '<div class="ronda"><h3>'+nombreRonda(r,total)+'</h3><div class="casillas">'+casillas+'</div></div>';
+    }).join('');
+
+    var cid=campeonId();
+    if(cid){
+      var j=porId(cid);
+      el.campeon.hidden=false;
+      el.campeon.style.setProperty('--c',j.color);
+      el.campeon.className='campeon'+(campeonPrevio!==cid?' nuevo':'');
+      el.campeon.innerHTML='<span class="rotulo">Campeón del torneo</span><span class="ganador">'+esc(j.nombre)+'</span>';
+      el.progreso.innerHTML='Torneo terminado <span>· puedes corregir un resultado tocando a otro participante</span>';
+    }else{
+      el.campeon.hidden=true;
+      var enJuego=null, pendientes=0;
+      for(var r=0;r<R.length&&enJuego===null;r++){
+        var p=0;
+        R[r].forEach(function(m){if(!m.libre&&m.g===null)p++});
+        if(p>0){enJuego=r;pendientes=p}
+      }
+      if(enJuego!==null){
+        el.progreso.innerHTML=nombreRonda(enJuego,R.length)+' <span>· '+pendientes+' cruce'+(pendientes===1?'':'s')+' sin ganador. Toca al ganador de cada cruce.</span>';
+      }
+    }
+    campeonPrevio=cid;
+  }
+
+  function render(){
+    document.title=estado.nombre||'Torneo de Just Dance';
+    el.nombre.value=estado.nombre;
+    var enLlaves=!!estado.rondas;
+    el.vIns.hidden=enLlaves;
+    el.vLl.hidden=!enLlaves;
+    el.btnReiniciar.hidden=!enLlaves;
+    el.btnEditar.hidden=!enLlaves;
+    if(enLlaves){ pintarFranja(); pintarLlaves(); }
+    else{ pintarLista(); }
+    sincronizarCanciones();
+    pintarRuleta();
+  }
+
+  /* ---------- Eventos: inscripción ---------- */
+  function agregar(){
+    var v=el.nuevo.value.replace(/\s+/g,' ').trim();
+    if(!v){aviso('Escribe un nombre antes de agregar.');return}
+    if(estado.jugadores.length>=MAX){aviso('El máximo es '+MAX+' participantes.');return}
+    var repetido=estado.jugadores.some(function(j){return j.nombre.toLowerCase()===v.toLowerCase()});
+    if(repetido){aviso('Ese nombre ya está inscrito. Agrega un apodo para distinguirlos.');return}
+    var id=estado.sig++;
+    estado.jugadores.push({id:id,nombre:v,color:COLORES[(id-1)%COLORES.length]});
+    el.nuevo.value='';
+    aviso('');
+    guardar(); pintarLista(); el.nuevo.focus();
+  }
+  el.btnAgregar.addEventListener('click',agregar);
+  el.nuevo.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();agregar()}});
+
+  el.lista.addEventListener('click',function(e){
+    var b=e.target.closest('.quitar'); if(!b) return;
+    var id=Number(b.getAttribute('data-id'));
+    estado.jugadores=estado.jugadores.filter(function(j){return j.id!==id});
+    aviso(''); guardar(); pintarLista();
+  });
+  el.lista.addEventListener('change',function(e){
+    var inp=e.target; if(inp.tagName!=='INPUT') return;
+    var id=Number(inp.getAttribute('data-id')), j=porId(id); if(!j) return;
+    var v=inp.value.replace(/\s+/g,' ').trim();
+    var repetido=estado.jugadores.some(function(o){return o.id!==id&&o.nombre.toLowerCase()===v.toLowerCase()});
+    if(!v||repetido){
+      aviso(!v?'El nombre no puede quedar vacío.':'Ese nombre ya está inscrito. Agrega un apodo para distinguirlos.');
+      inp.value=j.nombre; return;
+    }
+    aviso(''); j.nombre=v; inp.value=v; guardar();
+  });
+  el.lista.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.tagName==='INPUT'){e.target.blur()}});
+
+  el.btnMezclar.addEventListener('click',function(){
+    var J=estado.jugadores;
+    for(var i=J.length-1;i>0;i--){var k=Math.floor(Math.random()*(i+1));var t=J[i];J[i]=J[k];J[k]=t}
+    guardar(); pintarLista();
+  });
+
+  el.btnIniciar.addEventListener('click',function(){
+    if(estado.jugadores.length<MIN) return;
+    campeonPrevio=null;
+    limpiarRuleta();
+    generar(); guardar(); render();
+    window.scrollTo(0,0);
+  });
+
+  /* ---------- Eventos: llaves ---------- */
+  el.llaves.addEventListener('click',function(e){
+    var b=e.target.closest('button.fila'); if(!b||b.disabled) return;
+    var r=Number(b.getAttribute('data-r')), i=Number(b.getAttribute('data-i')), id=Number(b.getAttribute('data-id'));
+    var m=estado.rondas[r][i];
+    if(m.libre||!m.a||!m.b) return;
+    m.g=(m.g===id)?null:id;
+    recalcular(); guardar(); pintarLlaves();
+  });
+
+  /* Botón de doble confirmación */
+  function doble(btn,accion){
+    var textoOriginal=btn.textContent, temporizador=null;
+    btn.addEventListener('click',function(){
+      if(btn.hasAttribute('data-pend')){
+        clearTimeout(temporizador);
+        btn.removeAttribute('data-pend'); btn.textContent=textoOriginal;
+        accion(); return;
+      }
+      btn.setAttribute('data-pend','1'); btn.textContent='Toca de nuevo para confirmar';
+      temporizador=setTimeout(function(){btn.removeAttribute('data-pend');btn.textContent=textoOriginal},4000);
+    });
+  }
+  doble(el.btnReiniciar,function(){campeonPrevio=null;limpiarRuleta();generar();guardar();render()});
+  doble(el.btnEditar,function(){estado.rondas=null;campeonPrevio=null;guardar();render()});
+
+  el.nombre.addEventListener('input',function(){
+    estado.nombre=el.nombre.value; document.title=estado.nombre||'Torneo de Just Dance'; guardar();
+  });
+
+  /* ---------- Canciones y ruleta ---------- */
+  var giro=0, girando=false;
+  var reducido=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function parsearCanciones(t){
+    var vistos={}, out=[];
+    t.split(/\r?\n/).forEach(function(l){
+      var v=l.replace(/\s+/g,' ').trim().slice(0,60);
+      if(!v) return;
+      var k=v.toLowerCase(); if(vistos[k]) return;
+      vistos[k]=1; out.push(v);
+    });
+    return out.slice(0,60);
+  }
+  function limpiarRuleta(){ estado.usadas=[]; estado.ultima=''; }
+
+  function sincronizarCanciones(){
+    var t=estado.canciones.join('\n');
+    if(document.activeElement!==el.txt1) el.txt1.value=t;
+    if(document.activeElement!==el.txt2) el.txt2.value=t;
+    var n=estado.canciones.length;
+    el.cuenta.textContent=n===0?'Aún no hay canciones.':n+' canción'+(n===1?'':'es')+' en la ruleta.';
+  }
+  function aplicarCanciones(texto){
+    estado.canciones=parsearCanciones(texto);
+    estado.usadas=estado.usadas.filter(function(c){return estado.canciones.indexOf(c)>=0});
+    if(estado.canciones.indexOf(estado.ultima)<0) estado.ultima='';
+    guardar(); sincronizarCanciones(); pintarRuleta();
+  }
+  el.txt1.addEventListener('change',function(){aplicarCanciones(el.txt1.value)});
+  el.txt2.addEventListener('change',function(){aplicarCanciones(el.txt2.value)});
+
+  function corto(t,max){return t.length>max?t.slice(0,max-1)+'…':t}
+
+  function pintarRuleta(){
+    var C=estado.canciones, n=C.length, R=150, h='';
+    el.chk.checked=estado.sinRepetir;
+    if(n===0){
+      h='<circle r="150" fill="var(--hueco)" stroke="var(--line)" stroke-width="3"/>'+
+        '<text text-anchor="middle" y="5" fill="var(--muted)" font-size="15" font-family="Figtree,Arial,sans-serif">Sin canciones</text>';
+    }else{
+      var a=360/n;
+      for(var k=0;k<n;k++){
+        var color=COLORES[k%COLORES.length];
+        var usada=estado.sinRepetir&&estado.usadas.indexOf(C[k])>=0;
+        var op=usada?0.3:1;
+        if(n===1){
+          h+='<circle r="150" fill="'+color+'" opacity="'+op+'"/>';
+        }else{
+          var t1=(k*a)*Math.PI/180, t2=((k+1)*a)*Math.PI/180;
+          var x1=R*Math.sin(t1), y1=-R*Math.cos(t1), x2=R*Math.sin(t2), y2=-R*Math.cos(t2);
+          h+='<path d="M0 0 L'+x1.toFixed(2)+' '+y1.toFixed(2)+' A'+R+' '+R+' 0 '+(a>180?1:0)+' 1 '+x2.toFixed(2)+' '+y2.toFixed(2)+' Z" fill="'+color+'" opacity="'+op+'" stroke="#fff" stroke-width="2"/>';
+        }
+        if(n<=16){
+          var mid=(k+0.5)*a, tam=n<=8?15:11;
+          var rot=n===1?-90:mid-90;
+          h+='<text transform="rotate('+rot.toFixed(2)+') translate(138,0)" text-anchor="end" dominant-baseline="middle" font-size="'+tam+'" font-weight="700" font-family="Figtree,Arial,sans-serif" fill="#fff" stroke="#1a1046" stroke-width="3" paint-order="stroke" opacity="'+(usada?0.6:1)+'">'+esc(corto(C[k],n<=8?18:14))+'</text>';
+        }
+      }
+      h+='<circle r="14" fill="#fff" stroke="#1a1046" stroke-width="3"/>';
+    }
+    el.rueda.innerHTML=h;
+    if(estado.ultima){
+      el.cancionActual.className='cancion';
+      el.cancionActual.textContent=estado.ultima;
+    }else{
+      el.cancionActual.className='cancion vacia';
+      el.cancionActual.textContent=n===0?'Agrega canciones en la lista para poder girar.':'Aún no ha salido ninguna canción.';
+    }
+    el.btnGirar.disabled=girando||n===0;
+  }
+
+  function girar(){
+    if(girando) return;
+    var C=estado.canciones; if(!C.length) return;
+    el.avisoRuleta.textContent='';
+    var disp=[];
+    C.forEach(function(c,k){ if(!estado.sinRepetir||estado.usadas.indexOf(c)<0) disp.push(k) });
+    if(!disp.length){
+      estado.usadas=[];
+      disp=C.map(function(c,k){return k});
+      el.avisoRuleta.textContent='Ya salieron todas las canciones. La ruleta vuelve a empezar.';
+    }
+    var k=disp[Math.floor(Math.random()*disp.length)];
+    var a=360/C.length;
+    var objetivo=(360-((k+0.5)*a+(Math.random()-0.5)*a*0.6)+720)%360;
+    var actual=((giro%360)+360)%360;
+    var delta=(objetivo-actual+360)%360;
+    giro+=1800+delta;
+    girando=true; el.btnGirar.disabled=true;
+    el.rueda.style.transition=reducido?'none':'transform 4.5s cubic-bezier(.12,.6,.1,1)';
+    el.rueda.style.transform='rotate('+giro+'deg)';
+    var fin=function(){
+      if(!girando) return;
+      girando=false;
+      estado.ultima=C[k];
+      if(estado.usadas.indexOf(C[k])<0) estado.usadas.push(C[k]);
+      guardar(); pintarRuleta();
+    };
+    if(reducido) fin(); else setTimeout(fin,4700);
+  }
+  el.btnGirar.addEventListener('click',girar);
+  el.chk.addEventListener('change',function(){estado.sinRepetir=el.chk.checked;guardar();pintarRuleta()});
+  el.btnReiniciarRuleta.addEventListener('click',function(){
+    if(girando) return;
+    limpiarRuleta(); el.avisoRuleta.textContent=''; guardar(); pintarRuleta();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
