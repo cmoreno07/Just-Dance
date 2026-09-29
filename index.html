@@ -44,14 +44,17 @@ button,input{font:inherit;color:inherit}
 }
 .titulo:hover,.titulo:focus{border-bottom-color:var(--line)}
 .acciones{display:flex;gap:10px;flex-wrap:wrap}
-.franja{display:flex;height:12px;border-radius:99px;overflow:hidden;margin:10px 0 26px;background:var(--line)}
+.cabecera .acciones{justify-content:flex-end;max-width:100%}
+.franja{display:flex;height:12px;border-radius:99px;overflow:hidden;margin:6px 0 26px;background:var(--line)}
 .franja span{flex:1;min-width:3px}
+#msgGlobal{margin:6px 0 0}
 
 /* Botones */
 .btn{
   border:2px solid var(--ink);background:transparent;padding:10px 18px;border-radius:10px;
   font-weight:700;cursor:pointer;min-height:44px;
 }
+.btn.chico{padding:6px 12px;min-height:38px;font-size:.92rem}
 .btn:hover:not(:disabled){background:var(--hueco)}
 .btn.principal{background:var(--acento);border-color:var(--acento);color:var(--acento-ink)}
 .btn.principal:hover:not(:disabled){filter:brightness(1.08);background:var(--acento)}
@@ -71,8 +74,8 @@ button,input{font:inherit;color:inherit}
 .aviso{min-height:1.5em;margin:8px 0 0;color:var(--acento);font-weight:600}
 .ayuda{color:var(--muted);margin:0 0 6px;font-size:.95rem}
 .lista{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px}
-.lista li{display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:10px;padding:6px 8px 6px 0;border-left:10px solid var(--c);overflow:hidden}
-.lista input{flex:1;min-width:0;background:transparent;border:2px solid transparent;border-radius:8px;padding:8px 10px;font-weight:600;font-size:1.05rem}
+.lista li{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;background:var(--bg);border-radius:10px;padding:6px 8px 6px 0;border-left:10px solid var(--c);overflow:hidden}
+.lista input{flex:1 1 140px;min-width:0;background:transparent;border:2px solid transparent;border-radius:8px;padding:8px 10px;font-weight:600;font-size:1.05rem}
 .lista input:hover{border-color:var(--line)}
 .lista input:focus{border-color:var(--acento);outline:none}
 .quitar{background:transparent;border:0;color:var(--muted);cursor:pointer;padding:8px 10px;border-radius:8px;font-weight:600}
@@ -81,8 +84,25 @@ button,input{font:inherit;color:inherit}
 .resumen dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:10px 16px}
 .resumen dt{color:var(--muted)}
 .resumen dd{margin:0;font:800 1.6rem/1 var(--display);text-align:right}
+.resumen .check{margin-top:18px}
 .resumen .nota{margin:18px 0 0;padding-top:14px;border-top:2px solid var(--line);color:var(--muted);font-size:.95rem}
 .resumen .btn{width:100%;margin-top:18px}
+
+/* Ahora bailan */
+.proximo{margin-bottom:24px;padding:22px 26px;background:var(--card);border:2px solid var(--line);border-radius:16px}
+.prox-rotulo{margin:0 0 12px;color:var(--muted);font-weight:700;font-size:1rem;text-transform:uppercase;letter-spacing:.06em}
+.prox-duelo{display:flex;flex-wrap:wrap;align-items:stretch;gap:14px 18px}
+.prox-jug{
+  flex:1 1 220px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;
+  padding:16px 20px;border:2px solid var(--line);border-left:14px solid var(--c);border-radius:12px;background:var(--bg);cursor:pointer;color:var(--ink)
+}
+.prox-jug:hover{background:color-mix(in srgb,var(--c) 18%,var(--bg))}
+.prox-nombre{font:800 clamp(1.6rem,4vw,3rem)/1.1 var(--display);overflow-wrap:anywhere}
+.prox-gana{font-size:.85rem;color:var(--muted);margin-top:4px}
+.prox-vs{align-self:center;font:800 1.6rem var(--display);color:var(--muted)}
+.prox-cancion{margin:14px 0 0;font:800 clamp(1.2rem,3vw,2rem)/1.2 var(--display)}
+.prox-cancion span{font:600 .9rem var(--cuerpo);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-right:8px}
+.prox-cancion.vacia{font:400 1rem var(--cuerpo);color:var(--muted)}
 
 /* Llaves */
 .estado{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;align-items:center;margin-bottom:18px}
@@ -94,6 +114,8 @@ button,input{font:inherit;color:inherit}
 }
 .campeon .rotulo{color:var(--muted);font-weight:600;width:100%}
 .campeon .ganador{font:800 clamp(2.2rem,7vw,5rem)/1 var(--display);letter-spacing:-.02em;overflow-wrap:anywhere}
+.campeon .podio{width:100%;display:flex;flex-wrap:wrap;gap:6px 28px;color:var(--muted);font-size:1.15rem}
+.campeon .podio strong{color:var(--ink)}
 .campeon.nuevo{animation:barrido .9s cubic-bezier(.2,.7,.2,1) both}
 @keyframes barrido{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
 @media (prefers-reduced-motion:reduce){.campeon.nuevo{animation:none}}
@@ -118,6 +140,9 @@ button,input{font:inherit;color:inherit}
 .fila.pierde{opacity:.5}
 .fila.vacia{--c:var(--line);color:var(--muted);font-weight:400;cursor:default;background:var(--hueco)}
 .fila:focus-visible{outline-offset:-3px}
+.cancion-cruce{margin:6px 2px 0;font-size:.9rem;font-weight:600;color:var(--muted);overflow-wrap:anywhere}
+.tercero{margin-top:28px}
+.tercero h3{font:800 1.15rem/1.2 var(--display);margin:0 0 10px}
 
 /* Conectores */
 .casilla::after{content:"";position:absolute;right:-24px;width:24px;top:50%;border-top:2px solid var(--line)}
@@ -143,6 +168,52 @@ textarea:focus{border-color:var(--acento);outline:none}
 .check input{width:20px;height:20px;accent-color:var(--acento)}
 .editar{width:100%}
 .editar summary{cursor:pointer;font-weight:700;margin-bottom:8px}
+.editar.sub{margin-top:16px}
+.campo{display:grid;gap:6px;font-weight:700}
+select{padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:600 1.05rem var(--cuerpo);min-height:44px;max-width:100%}
+select:focus{border-color:var(--acento);outline:none}
+select:disabled{opacity:.5}
+
+/* Cruces previos (llegadas tardías) */
+.previos{margin-bottom:22px;padding:18px 20px;background:var(--card);border:2px solid var(--line);border-radius:16px}
+.previos h3{font:800 1.15rem/1.2 var(--display);margin:0 0 4px}
+.previos-lista{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px}
+.previo{flex:0 0 260px}
+.previo-nota{margin:6px 2px 0;font-size:.9rem;color:var(--muted)}
+
+/* Ventana de confirmación */
+.modal{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(10,5,30,.62)}
+.modal-caja{max-width:480px;width:100%;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:24px}
+.modal-caja h2{font:800 1.4rem/1.2 var(--display);margin:0 0 10px}
+.modal-caja p{margin:0 0 20px}
+
+/* Modo proyector */
+.salir-proy{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:40;opacity:.55;background:var(--card)}
+.salir-proy:hover,.salir-proy:focus{opacity:1}
+body.proyector .solo-admin{display:none!important}
+body.proyector{font-size:1.2rem}
+body.proyector .envoltura{max-width:none}
+body.proyector .titulo{pointer-events:none}
+body.proyector .ronda{flex-basis:310px}
+body.proyector .fila{font-size:1.3rem;min-height:64px}
+body.proyector .rueda-caja{width:min(440px,42vw)}
+body.proyector .cancion{font-size:clamp(2rem,5vw,3.6rem)}
+
+/* Impresión y PDF */
+@media print{
+  @page{size:landscape;margin:12mm}
+  html:root,html:root:not([data-theme="light"]),html:root[data-theme="dark"]{
+    --bg:#ffffff; --card:#ffffff; --ink:#000000; --muted:#444444; --line:#999999; --hueco:#eeeeee; --acento:#c4005f; --acento-ink:#ffffff;
+    padding:0;
+  }
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff;min-height:0}
+  .no-imprimir{display:none!important}
+  .envoltura{max-width:none;padding:0}
+  .llaves{overflow:visible;padding-bottom:0}
+  .campeon.nuevo{animation:none}
+  .fila{cursor:default}
+}
 </style>
 </head>
 <body>
@@ -150,11 +221,19 @@ textarea:focus{border-color:var(--acento);outline:none}
   <header>
     <div class="cabecera">
       <input id="nombre" class="titulo" type="text" maxlength="50" aria-label="Nombre del torneo" value="Torneo Just Dance">
-      <div class="acciones">
-        <button id="btnReiniciar" class="btn peligro" type="button" hidden>Reiniciar resultados</button>
-        <button id="btnEditar" class="btn peligro" type="button" hidden>Editar participantes</button>
+      <div class="acciones solo-admin no-imprimir">
+        <button id="btnProyector" class="btn chico" type="button" hidden>Modo proyector</button>
+        <button id="btnImprimir" class="btn chico" type="button" hidden>Imprimir o guardar PDF</button>
+        <button id="btnExportar" class="btn chico" type="button">Exportar respaldo</button>
+        <button id="btnImportar" class="btn chico" type="button">Importar respaldo</button>
+        <input id="archivo" type="file" accept="application/json,.json" hidden>
+        <button id="btnReiniciar" class="btn chico peligro" type="button" hidden>Reiniciar resultados</button>
+        <button id="btnTardias" class="btn chico principal" type="button" hidden>Agregar llegadas tardías</button>
+        <button id="btnEditar" class="btn chico peligro" type="button" hidden>Editar participantes</button>
+        <button id="btnResetTotal" class="btn chico peligro" type="button">Reset total</button>
       </div>
     </div>
+    <p id="msgGlobal" class="aviso solo-admin no-imprimir" role="status" aria-live="polite"></p>
     <div id="franja" class="franja" aria-hidden="true"></div>
   </header>
 
@@ -162,33 +241,37 @@ textarea:focus{border-color:var(--acento);outline:none}
     <!-- Vista 1: inscripción -->
     <section id="vistaInscripcion" class="inscripcion" aria-label="Inscripción de participantes">
       <div class="panel">
-        <h2>Participantes</h2>
+        <h2 id="tituloParticipantes">Participantes</h2>
         <div class="agregar">
-          <input id="nuevo" type="text" maxlength="24" placeholder="Nombre o apodo" aria-label="Nombre o apodo del participante" autocomplete="off">
+          <input id="nuevo" type="text" maxlength="40" placeholder="Nombre o apodo" aria-label="Nombre o apodo del participante" autocomplete="off">
           <button id="btnAgregar" class="btn principal" type="button">Agregar</button>
         </div>
+        <label class="campo" for="masivo" id="rotuloMasivo" style="margin-top:16px">Agregar varios a la vez</label>
+        <textarea id="masivo" rows="5" placeholder="Un nombre por línea. Por ejemplo:&#10;Ana&#10;Beto&#10;Caro"></textarea>
+        <div style="margin-top:10px"><button id="btnMasivo" class="btn" type="button">Agregar lista</button></div>
         <p id="aviso" class="aviso" role="status" aria-live="polite"></p>
-        <p class="ayuda">Los cruces siguen el orden de la lista. Usa Mezclar para sortearlos. Puedes cambiar un nombre tocándolo.</p>
+        <p id="ayudaLista" class="ayuda">Puedes agregar uno por uno o pegar varios nombres, uno por línea. Los cruces siguen el orden de la lista: usa Mezclar para sortearlos. Toca un nombre para corregirlo.</p>
         <ul id="lista" class="lista"></ul>
         <p id="vacio" class="vacio">Aún no hay participantes. Escribe un nombre y presiona Agregar.</p>
-        <div style="margin-top:16px"><button id="btnMezclar" class="btn" type="button">Mezclar</button></div>
+        <div class="acciones" style="margin-top:16px"><button id="btnMezclar" class="btn" type="button">Mezclar</button><button id="btnVaciar" class="btn peligro" type="button">Quitar todos</button></div>
       </div>
 
       <aside class="panel resumen" aria-label="Resumen de las llaves">
         <h2>Así quedarían las llaves</h2>
         <dl>
-          <dt>Participantes</dt><dd id="rNum">0</dd>
+          <dt id="rEtiqueta">Participantes</dt><dd id="rNum">0</dd>
           <dt>Rondas</dt><dd id="rRondas">0</dd>
           <dt>Cruces en la primera ronda</dt><dd id="rCruces">0</dd>
           <dt>Pases libres</dt><dd id="rLibres">0</dd>
         </dl>
+        <label class="check"><input type="checkbox" id="chkTercero"> Disputar el tercer lugar</label>
         <p id="rNota" class="nota"></p>
         <button id="btnIniciar" class="btn principal" type="button" disabled>Iniciar torneo</button>
       </aside>
 
       <div class="panel canciones">
         <h2>Canciones para la ruleta</h2>
-        <p class="ayuda">Opcional. Escribe una canción por línea o pega una lista completa (máximo 60).</p>
+        <p class="ayuda">Opcional. Esta es la lista general: escribe una canción por línea o pega una lista completa (máximo 60). Ya con las llaves en marcha podrás definir una lista distinta para cada ronda, por ejemplo para las últimas.</p>
         <textarea id="txtCanciones" rows="7" aria-label="Lista de canciones, una por línea" placeholder="Una canción por línea. Por ejemplo:&#10;Canción 1&#10;Canción 2&#10;Canción 3"></textarea>
         <p id="cuentaCanciones" class="ayuda" style="margin-top:8px"></p>
       </div>
@@ -196,7 +279,10 @@ textarea:focus{border-color:var(--acento);outline:none}
 
     <!-- Vista 2: llaves -->
     <section id="vistaLlaves" aria-label="Llaves del torneo" hidden>
-      <details id="ruleta" class="panel ruleta" open>
+      <div id="campeon" class="campeon" hidden></div>
+      <div id="proximo" class="proximo no-imprimir" hidden></div>
+
+      <details id="ruleta" class="panel ruleta no-imprimir" open>
         <summary>Ruleta de canciones</summary>
         <div class="ruleta-cuerpo">
           <div class="rueda-caja">
@@ -204,31 +290,70 @@ textarea:focus{border-color:var(--acento);outline:none}
             <svg id="rueda" viewBox="-160 -160 320 320" role="img" aria-label="Ruleta de canciones"></svg>
           </div>
           <div class="ruleta-ctrl">
+            <label class="campo solo-admin">Ruleta para <select id="selRonda"></select></label>
             <button id="btnGirar" class="btn principal" type="button">Girar ruleta</button>
             <p id="cancionActual" class="cancion vacia" aria-live="polite">Aún no ha salido ninguna canción.</p>
             <p id="avisoRuleta" class="aviso" role="status" aria-live="polite"></p>
-            <label class="check"><input type="checkbox" id="chkRepetir"> No repetir las canciones que ya salieron</label>
-            <button id="btnReiniciarRuleta" class="btn" type="button">Reiniciar ruleta</button>
-            <details class="editar">
-              <summary>Editar lista de canciones</summary>
-              <textarea id="txtCanciones2" rows="6" aria-label="Lista de canciones, una por línea" placeholder="Una canción por línea"></textarea>
+            <p id="infoLista" class="ayuda solo-admin"></p>
+            <label class="check solo-admin"><input type="checkbox" id="chkRepetir"> No repetir las canciones que ya salieron</label>
+            <button id="btnReiniciarRuleta" class="btn solo-admin" type="button">Reiniciar canciones usadas</button>
+            <details class="editar solo-admin">
+              <summary>Editar canciones</summary>
+              <label class="campo" for="txtCanciones2" id="rotuloLista">Canciones de esta ronda</label>
+              <textarea id="txtCanciones2" rows="6" placeholder="Una canción por línea"></textarea>
+              <button id="btnListaGeneral" class="btn" type="button" style="margin-top:10px" hidden>Usar la lista general en esta ronda</button>
+              <details class="editar sub">
+                <summary>Lista general (rondas sin lista propia)</summary>
+                <textarea id="txtCanciones3" rows="6" aria-label="Lista general de canciones, una por línea" placeholder="Una canción por línea"></textarea>
+              </details>
             </details>
           </div>
         </div>
       </details>
 
-      <div id="campeon" class="campeon" hidden></div>
-      <div class="estado"><p id="progreso"></p></div>
+      <div class="estado no-imprimir"><p id="progreso"></p></div>
+      <div id="previos" class="previos" hidden></div>
       <div id="llaves" class="llaves"></div>
     </section>
   </main>
+</div>
+
+<button id="btnSalirProy" class="btn chico salir-proy no-imprimir" type="button" hidden>Salir del modo proyector</button>
+
+<div id="modalTardias" class="modal no-imprimir" role="dialog" aria-modal="true" aria-labelledby="tardiasTitulo" hidden>
+  <div class="modal-caja">
+    <h2 id="tardiasTitulo">Agregar llegadas tardías</h2>
+    <p class="ayuda" style="margin-bottom:10px">Un nombre por línea. Se ubican solos en las llaves sin tocar ningún cruce ya jugado.</p>
+    <textarea id="tardiasNombres" rows="4" aria-label="Nombres de las llegadas tardías, uno por línea" placeholder="Un nombre por línea. Por ejemplo:&#10;Brandon Bello"></textarea>
+    <label class="campo" id="tardiasAnclaWrap" for="tardiasAncla" style="margin-top:12px" hidden>Si no alcanzan los lugares libres, jugarán una llave previa en el cruce de:
+      <select id="tardiasAncla"></select>
+    </label>
+    <p id="tardiasResumen" class="ayuda" style="margin:12px 0 18px"></p>
+    <div class="acciones">
+      <button id="tardiasNo" class="btn" type="button">Cancelar</button>
+      <button id="tardiasSi" class="btn principal" type="button" disabled>Agregar</button>
+    </div>
+  </div>
+</div>
+
+<div id="modal" class="modal no-imprimir" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" hidden>
+  <div class="modal-caja">
+    <h2 id="modalTitulo"></h2>
+    <p id="modalTexto"></p>
+    <div class="acciones">
+      <button id="modalNo" class="btn" type="button">Cancelar</button>
+      <button id="modalSi" class="btn principal" type="button">Aceptar</button>
+    </div>
+  </div>
 </div>
 
 <script>
 (function(){
   var COLORES=['#ff2e88','#ffb400','#18c5b8','#7c5cff','#ff6b35','#3ddc84','#00a8ff','#e63946'];
   var CLAVE='jd-torneo-llaves';
-  var MIN=4, MAX=32;
+  var MIN=4, MAX=32, NOM=40;
+
+  var UNO='participante', VARIOS='participantes';
 
   function cargar(){
     try{
@@ -242,26 +367,62 @@ textarea:focus{border-color:var(--acento);outline:none}
 
   var estado=cargar()||{nombre:'Torneo Just Dance',jugadores:[],rondas:null,sig:1};
   if(!Array.isArray(estado.canciones)) estado.canciones=[];
-  if(!Array.isArray(estado.usadas)) estado.usadas=[];
+  if(!estado.cancionesRonda||typeof estado.cancionesRonda!=='object'||Array.isArray(estado.cancionesRonda)) estado.cancionesRonda={};
+  if(!estado.usadasRonda||typeof estado.usadasRonda!=='object'||Array.isArray(estado.usadasRonda)) estado.usadasRonda={};
+  if(typeof estado.rondaRuleta!=='number') estado.rondaRuleta=null;
   if(typeof estado.sinRepetir!=='boolean') estado.sinRepetir=true;
   if(typeof estado.ultima!=='string') estado.ultima='';
+  if(typeof estado.conTercero!=='boolean') estado.conTercero=false;
+  if(!estado.rondas||!estado.tercero||typeof estado.tercero!=='object') estado.tercero=null;
+  if(!estado.rondas||!Array.isArray(estado.previos)) estado.previos=[];
   var campeonPrevio=null;
 
   var $=function(id){return document.getElementById(id)};
   var el={
-    nombre:$('nombre'),franja:$('franja'),nuevo:$('nuevo'),btnAgregar:$('btnAgregar'),aviso:$('aviso'),
-    lista:$('lista'),vacio:$('vacio'),btnMezclar:$('btnMezclar'),btnIniciar:$('btnIniciar'),
-    rNum:$('rNum'),rRondas:$('rRondas'),rCruces:$('rCruces'),rLibres:$('rLibres'),rNota:$('rNota'),
-    vIns:$('vistaInscripcion'),vLl:$('vistaLlaves'),campeon:$('campeon'),progreso:$('progreso'),llaves:$('llaves'),
-    btnReiniciar:$('btnReiniciar'),btnEditar:$('btnEditar'),
-    txt1:$('txtCanciones'),txt2:$('txtCanciones2'),cuenta:$('cuentaCanciones'),
-    rueda:$('rueda'),btnGirar:$('btnGirar'),cancionActual:$('cancionActual'),avisoRuleta:$('avisoRuleta'),
-    chk:$('chkRepetir'),btnReiniciarRuleta:$('btnReiniciarRuleta')
+    nombre:$('nombre'),franja:$('franja'),msgG:$('msgGlobal'),
+    btnProyector:$('btnProyector'),btnImprimir:$('btnImprimir'),btnExportar:$('btnExportar'),btnImportar:$('btnImportar'),archivo:$('archivo'),
+    btnReiniciar:$('btnReiniciar'),btnEditar:$('btnEditar'),btnResetTotal:$('btnResetTotal'),
+    nuevo:$('nuevo'),btnAgregar:$('btnAgregar'),
+    masivo:$('masivo'),btnMasivo:$('btnMasivo'),aviso:$('aviso'),
+    lista:$('lista'),vacio:$('vacio'),btnMezclar:$('btnMezclar'),btnVaciar:$('btnVaciar'),
+    rNum:$('rNum'),rRondas:$('rRondas'),rCruces:$('rCruces'),rLibres:$('rLibres'),
+    chkTercero:$('chkTercero'),rNota:$('rNota'),btnIniciar:$('btnIniciar'),
+    txt1:$('txtCanciones'),txt2:$('txtCanciones2'),txt3:$('txtCanciones3'),cuenta:$('cuentaCanciones'),
+    vIns:$('vistaInscripcion'),vLl:$('vistaLlaves'),campeon:$('campeon'),proximo:$('proximo'),progreso:$('progreso'),llaves:$('llaves'),previos:$('previos'),
+    rueda:$('rueda'),sel:$('selRonda'),btnGirar:$('btnGirar'),cancionActual:$('cancionActual'),avisoRuleta:$('avisoRuleta'),
+    info:$('infoLista'),chk:$('chkRepetir'),btnReiniciarRuleta:$('btnReiniciarRuleta'),
+    rotulo:$('rotuloLista'),btnGeneral:$('btnListaGeneral'),
+    btnSalirProy:$('btnSalirProy'),modal:$('modal'),mTitulo:$('modalTitulo'),mTexto:$('modalTexto'),mNo:$('modalNo'),mSi:$('modalSi'),
+    btnTardias:$('btnTardias'),mT:$('modalTardias'),tNombres:$('tardiasNombres'),tAnclaWrap:$('tardiasAnclaWrap'),
+    tAncla:$('tardiasAncla'),tResumen:$('tardiasResumen'),tNo:$('tardiasNo'),tSi:$('tardiasSi')
   };
 
   function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
   function porId(id){for(var i=0;i<estado.jugadores.length;i++){if(estado.jugadores[i].id===id)return estado.jugadores[i]}return null}
   function aviso(t){el.aviso.textContent=t||''}
+  var tMsg=null;
+  function msgGlobal(t){
+    el.msgG.textContent=t||''; clearTimeout(tMsg);
+    if(t) tMsg=setTimeout(function(){el.msgG.textContent=''},8000);
+  }
+  function plural(n,uno,varios){return n===1?uno:varios}
+
+  /* ---------- Ventana de confirmación ---------- */
+  var accionModal=null;
+  function pedirConfirmacion(titulo,texto,textoSi,fn){
+    el.mTitulo.textContent=titulo; el.mTexto.textContent=texto; el.mSi.textContent=textoSi;
+    accionModal=fn; el.modal.hidden=false; el.mNo.focus();
+  }
+  function cerrarModal(){el.modal.hidden=true;accionModal=null}
+  el.mNo.addEventListener('click',cerrarModal);
+  el.mSi.addEventListener('click',function(){var f=accionModal;cerrarModal();if(f)f()});
+  el.modal.addEventListener('click',function(e){if(e.target===el.modal)cerrarModal()});
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape') return;
+    if(!el.modal.hidden){cerrarModal();return}
+    if(!el.mT.hidden){cerrarTardias();return}
+    if(proyector) salirProyector();
+  });
 
   /* ---------- Lógica de llaves ---------- */
   function ordenSiembra(n){
@@ -290,18 +451,60 @@ textarea:focus{border-color:var(--acento);outline:none}
       R.push(ronda); m=m/2;
     }
     estado.rondas=R;
+    estado.tercero=null;
+    estado.previos=[];
     recalcular();
+  }
+
+  function perdedor(m){
+    return (m&&m.g!==null&&m.a&&m.b)?(m.g===m.a?m.b:m.a):null;
+  }
+
+  /* Cruces previos: quien gana entra a la primera ronda, contra quien ya tenía ese lugar (pase libre). */
+  function recalcularPrevios(){
+    var R=estado.rondas; if(!R) return;
+    var P=estado.previos||[];
+    P.forEach(function(p){
+      if(p.g!==null&&p.g!==p.a&&p.g!==p.b) p.g=null;
+      if(typeof p.destP==='number'){
+        var t=P[p.destP]; if(!t) return;
+        var lado=p.lado==='b'?'b':'a', antes=t[lado];
+        t[lado]=p.g;
+        if(antes!==t[lado]){ if(t.c) delete t.c; t.g=null; }
+        return;
+      }
+      var m=R[0][p.dest]; if(!m) return;
+      var pb=m.b;
+      m.b=p.g; m.libre=false;
+      if(pb!==m.b){ if(m.c) delete m.c; m.g=null; }
+      if(m.g!==null&&m.g!==m.a&&m.g!==m.b) m.g=null;
+    });
   }
 
   function recalcular(){
     var R=estado.rondas;
+    recalcularPrevios();
     for(var r=1;r<R.length;r++){
       for(var i=0;i<R[r].length;i++){
-        var m=R[r][i];
+        var m=R[r][i], pa=m.a, pb=m.b;
         m.a=R[r-1][2*i].g; m.b=R[r-1][2*i+1].g;
+        if(pa!==m.a||pb!==m.b){ if(m.c) delete m.c; m.g=null; }
         if(m.g!==null && m.g!==m.a && m.g!==m.b) m.g=null;
       }
     }
+    recalcularTercero();
+  }
+
+  function recalcularTercero(){
+    var R=estado.rondas;
+    if(!estado.conTercero||!R||R.length<2){estado.tercero=null;return}
+    var sf=R[R.length-2];
+    var t=estado.tercero||{a:null,b:null,g:null,libre:false};
+    var na=perdedor(sf[0]), nb=perdedor(sf[1]);
+    if(t.a!==na||t.b!==nb){ if(t.c) delete t.c; t.g=null; }
+    t.a=na; t.b=nb;
+    if(t.g!==null&&t.g!==t.a&&t.g!==t.b) t.g=null;
+    estado.tercero=t;
   }
 
   function campeonId(){
@@ -319,6 +522,94 @@ textarea:focus{border-color:var(--acento);outline:none}
     return 'Ronda '+(r+1);
   }
 
+  /* Siguiente cruce: en orden de rondas; el tercer lugar se baila antes de la final. */
+  function proximoCruce(){
+    var R=estado.rondas; if(!R) return null;
+    var total=R.length;
+    var P=estado.previos||[];
+    for(var k=0;k<P.length;k++){
+      if(P[k].g===null&&P[k].a&&P[k].b) return {ref:'p',r:0,i:k,m:P[k]};
+    }
+    for(var r=0;r<total-1;r++){
+      for(var i=0;i<R[r].length;i++){
+        var m=R[r][i];
+        if(!m.libre&&m.g===null&&m.a&&m.b) return {ref:'r',r:r,i:i,m:m};
+      }
+    }
+    var t=estado.tercero;
+    if(t&&t.g===null&&t.a&&t.b) return {ref:'t',r:total-1,i:0,m:t};
+    var f=R[total-1][0];
+    if(f.g===null&&f.a&&f.b) return {ref:'r',r:total-1,i:0,m:f};
+    return null;
+  }
+
+  /* ---------- Marcar ganadores ---------- */
+  function cruceDe(ref,r,i){
+    if(ref==='t') return estado.tercero;
+    if(ref==='p') return (estado.previos||[])[i];
+    return estado.rondas&&estado.rondas[r]&&estado.rondas[r][i];
+  }
+
+  function contarPerdidas(ref,r,i,nuevo){
+    var orig={r:estado.rondas,t:estado.tercero,p:estado.previos};
+    var c=JSON.parse(JSON.stringify(orig));
+    estado.rondas=c.r; estado.tercero=c.t; estado.previos=c.p;
+    var n=0;
+    try{
+      var mm=cruceDe(ref,r,i);
+      mm.g=nuevo; recalcular();
+      for(var rr=0;rr<orig.r.length;rr++){
+        for(var ii=0;ii<orig.r[rr].length;ii++){
+          if(ref==='r'&&rr===r&&ii===i) continue;
+          if(orig.r[rr][ii].g!==null&&estado.rondas[rr][ii].g===null) n++;
+        }
+      }
+      if(ref!=='t'&&orig.t&&orig.t.g!==null&&estado.tercero&&estado.tercero.g===null) n++;
+      (orig.p||[]).forEach(function(q,k){
+        if(ref==='p'&&k===i) return;
+        if(q.g!==null&&estado.previos[k]&&estado.previos[k].g===null) n++;
+      });
+    }finally{
+      estado.rondas=orig.r; estado.tercero=orig.t; estado.previos=orig.p;
+    }
+    return n;
+  }
+
+  function aplicarGanador(ref,r,i,nuevo){
+    var m=cruceDe(ref,r,i);
+    m.g=nuevo;
+    recalcular(); guardar(); pintarLlaves();
+    if(!girando) pintarRuleta();
+  }
+
+  function marcar(ref,r,i,id){
+    var m=cruceDe(ref,r,i);
+    if(!m||m.libre||!m.a||!m.b) return;
+    if(id!==m.a&&id!==m.b) return;
+    var nuevo=(m.g===id)?null:id;
+    if(m.g!==null){
+      var n=contarPerdidas(ref,r,i,nuevo);
+      if(n>0){
+        pedirConfirmacion(
+          '¿Cambiar este resultado?',
+          'Esto borrará '+n+' resultado'+(n===1?'':'s')+' de las rondas siguientes que dependían de este cruce. ¿Quieres continuar?',
+          'Sí, cambiarlo',
+          function(){aplicarGanador(ref,r,i,nuevo)}
+        );
+        return;
+      }
+    }
+    aplicarGanador(ref,r,i,nuevo);
+  }
+
+  function clickMarcar(e){
+    var b=e.target.closest('button[data-ref]'); if(!b||b.disabled) return;
+    marcar(b.getAttribute('data-ref'),Number(b.getAttribute('data-r')),Number(b.getAttribute('data-i')),Number(b.getAttribute('data-id')));
+  }
+  el.llaves.addEventListener('click',clickMarcar);
+  el.proximo.addEventListener('click',clickMarcar);
+  el.previos.addEventListener('click',clickMarcar);
+
   /* ---------- Pintado ---------- */
   function pintarFranja(){
     var J=estado.jugadores;
@@ -328,10 +619,12 @@ textarea:focus{border-color:var(--acento);outline:none}
   function pintarLista(){
     var J=estado.jugadores;
     el.lista.innerHTML=J.map(function(j,k){
-      return '<li style="--c:'+j.color+'"><input type="text" maxlength="24" value="'+esc(j.nombre)+'" data-id="'+j.id+'" aria-label="Nombre del participante '+(k+1)+'"><button type="button" class="quitar" data-id="'+j.id+'">Quitar</button></li>';
+      return '<li style="--c:'+j.color+'"><input type="text" class="in-nombre" maxlength="'+NOM+'" value="'+esc(j.nombre)+'" data-id="'+j.id+'" aria-label="Nombre '+(k+1)+'">'+
+        '<button type="button" class="quitar" data-id="'+j.id+'">Quitar</button></li>';
     }).join('');
     el.vacio.hidden=J.length>0;
     el.btnMezclar.disabled=J.length<2;
+    el.btnVaciar.disabled=J.length===0;
     pintarResumen();
     pintarFranja();
   }
@@ -346,57 +639,117 @@ textarea:focus{border-color:var(--acento);outline:none}
     el.rCruces.textContent=tam?(tam/2-libres):0;
     el.rLibres.textContent=libres;
     if(n<MIN){
-      el.rNota.textContent='Faltan '+(MIN-n)+' participante'+((MIN-n)===1?'':'s')+' para poder iniciar (mínimo '+MIN+').';
+      el.rNota.textContent='Faltan '+(MIN-n)+' '+plural(MIN-n,UNO,VARIOS)+' para poder iniciar (mínimo '+MIN+').';
     }else if(libres>0){
-      el.rNota.textContent=libres+' participante'+(libres===1?' pasa':'s pasan')+' directo a la segunda ronda. Los pases libres van a los primeros de la lista.';
+      el.rNota.textContent=libres+' '+plural(libres,UNO,VARIOS)+(libres===1?' pasa':' pasan')+' directo a la segunda ronda. Los pases libres van a los primeros de la lista.';
     }else{
       el.rNota.textContent='Todos bailan desde la primera ronda.';
     }
     el.btnIniciar.disabled=n<MIN;
   }
 
-  function fila(r,i,m,id){
+  function fila(ref,r,i,m,id){
     var j=id?porId(id):null;
     if(!j){
-      return '<div class="fila vacia"><span class="nombre">'+(m.libre&&r===0?'Pase libre':'Por definir')+'</span></div>';
+      return '<div class="fila vacia"><span class="nombre">'+(ref==='r'&&m.libre&&r===0?'Pase libre':'Por definir')+'</span></div>';
     }
     var gana=m.g===id, pierde=m.g!==null&&m.g!==id;
     var activo=m.a&&m.b&&!m.libre;
     return '<button type="button" class="fila'+(gana?' gana':'')+(pierde?' pierde':'')+'" style="--c:'+j.color+'" '+
-      (activo?'':'disabled ')+'data-r="'+r+'" data-i="'+i+'" data-id="'+id+'" aria-pressed="'+gana+'">'+
-      '<span class="nombre">'+esc(j.nombre)+'</span><span class="marca">'+(gana?'✓':'')+'</span></button>';
+      (activo?'':'disabled ')+'data-ref="'+ref+'" data-r="'+r+'" data-i="'+i+'" data-id="'+id+'" aria-pressed="'+gana+'">'+
+      '<span class="nombre">'+esc(j.nombre)+'</span>'+
+      '<span class="marca">'+(gana?'✓':'')+'</span></button>';
+  }
+
+  function cancionCruce(m){
+    return m.c?'<div class="cancion-cruce">♪ '+esc(m.c)+'</div>':'';
+  }
+
+  function pintarProximo(){
+    var p=estado.rondas?proximoCruce():null;
+    if(!p){el.proximo.hidden=true;el.proximo.innerHTML='';return}
+    var total=estado.rondas.length, m=p.m;
+    var nombre=p.ref==='t'?'Tercer lugar':p.ref==='p'?'Cruce previo':nombreRonda(p.r,total);
+    var ja=porId(m.a), jb=porId(m.b);
+    if(!ja||!jb){el.proximo.hidden=true;return}
+    function boton(j){
+      return '<button type="button" class="prox-jug" style="--c:'+j.color+'" data-ref="'+p.ref+'" data-r="'+p.r+'" data-i="'+p.i+'" data-id="'+j.id+'">'+
+        '<span class="prox-nombre">'+esc(j.nombre)+'</span>'+
+        '<span class="prox-gana">Toca si gana</span></button>';
+    }
+    el.proximo.innerHTML='<p class="prox-rotulo">Ahora bailan · '+esc(nombre)+'</p>'+
+      '<div class="prox-duelo">'+boton(ja)+'<span class="prox-vs">VS</span>'+boton(jb)+'</div>'+
+      (m.c?'<p class="prox-cancion"><span>Canción</span>'+esc(m.c)+'</p>'
+          :'<p class="prox-cancion vacia">Aún sin canción. Gira la ruleta para asignarla a este cruce.</p>');
+    el.proximo.hidden=false;
+  }
+
+  function pintarPrevios(){
+    var P=estado.previos||[];
+    if(!estado.rondas||!P.length){el.previos.hidden=true;el.previos.innerHTML='';return}
+    var h='<h3>Cruces previos <small>(llegadas tardías)</small></h3>'+
+      '<p class="ayuda">El ganador de cada cruce previo entra a la primera ronda y juega contra el participante indicado.</p><div class="previos-lista">';
+    P.forEach(function(p,i){
+      var rival=null;
+      if(typeof p.destP==='number'){
+        var t=P[p.destP]; rival=t?porId(p.lado==='b'?t.a:t.b):null;
+      }else{
+        var destino=estado.rondas[0][p.dest]; rival=destino?porId(destino.a):null;
+      }
+      h+='<div class="previo"><div class="cuerpo">'+fila('p',0,i,p,p.a)+fila('p',0,i,p,p.b)+'</div>'+cancionCruce(p)+
+        '<p class="previo-nota">Quien gane juega contra '+(rival?esc(rival.nombre):'el participante con pase libre')+'.</p></div>';
+    });
+    h+='</div>';
+    el.previos.innerHTML=h; el.previos.hidden=false;
   }
 
   function pintarLlaves(){
     var R=estado.rondas, total=R.length;
     el.llaves.innerHTML=R.map(function(ronda,r){
       var casillas=ronda.map(function(m,i){
-        return '<div class="casilla"><div class="cruce"><div class="cuerpo">'+fila(r,i,m,m.a)+fila(r,i,m,m.b)+'</div></div></div>';
+        return '<div class="casilla"><div class="cruce"><div class="cuerpo">'+fila('r',r,i,m,m.a)+fila('r',r,i,m,m.b)+'</div>'+cancionCruce(m)+'</div></div>';
       }).join('');
-      return '<div class="ronda"><h3>'+nombreRonda(r,total)+'</h3><div class="casillas">'+casillas+'</div></div>';
+      var extra='';
+      if(r===total-1&&estado.conTercero&&estado.tercero){
+        var t=estado.tercero;
+        extra='<div class="tercero"><h3>Tercer lugar</h3><div class="cuerpo">'+fila('t',total-1,0,t,t.a)+fila('t',total-1,0,t,t.b)+'</div>'+cancionCruce(t)+'</div>';
+      }
+      return '<div class="ronda"><h3>'+nombreRonda(r,total)+'</h3><div class="casillas">'+casillas+'</div>'+extra+'</div>';
     }).join('');
 
     var cid=campeonId();
     if(cid){
       var j=porId(cid);
+      var seg=perdedor(R[total-1][0]);
+      var ter=(estado.conTercero&&estado.tercero&&estado.tercero.g!==null)?porId(estado.tercero.g):null;
+      var podio='';
+      if(seg&&porId(seg)) podio+='<span>Segundo lugar: <strong>'+esc(porId(seg).nombre)+'</strong></span>';
+      if(ter) podio+='<span>Tercer lugar: <strong>'+esc(ter.nombre)+'</strong></span>';
       el.campeon.hidden=false;
       el.campeon.style.setProperty('--c',j.color);
       el.campeon.className='campeon'+(campeonPrevio!==cid?' nuevo':'');
-      el.campeon.innerHTML='<span class="rotulo">Campeón del torneo</span><span class="ganador">'+esc(j.nombre)+'</span>';
+      el.campeon.innerHTML='<span class="rotulo">Campeón del torneo</span><span class="ganador">'+esc(j.nombre)+'</span>'+(podio?'<div class="podio">'+podio+'</div>':'');
       el.progreso.innerHTML='Torneo terminado <span>· puedes corregir un resultado tocando a otro participante</span>';
     }else{
       el.campeon.hidden=true;
-      var enJuego=null, pendientes=0;
-      for(var r=0;r<R.length&&enJuego===null;r++){
-        var p=0;
-        R[r].forEach(function(m){if(!m.libre&&m.g===null)p++});
-        if(p>0){enJuego=r;pendientes=p}
-      }
-      if(enJuego!==null){
-        el.progreso.innerHTML=nombreRonda(enJuego,R.length)+' <span>· '+pendientes+' cruce'+(pendientes===1?'':'s')+' sin ganador. Toca al ganador de cada cruce.</span>';
+      var p=proximoCruce();
+      if(p&&p.ref==='p'){
+        var pp=(estado.previos||[]).filter(function(x){return x.g===null}).length;
+        el.progreso.innerHTML='Cruces previos <span>· '+pp+' sin ganador. Los ganadores entran a la primera ronda.</span>';
+      }else if(p&&p.ref==='t'){
+        el.progreso.innerHTML='Tercer lugar <span>· falta decidir el ganador. Toca al ganador del cruce.</span>';
+      }else if(p){
+        var pend=0;
+        R[p.r].forEach(function(m){if(!m.libre&&m.g===null)pend++});
+        el.progreso.innerHTML=nombreRonda(p.r,total)+' <span>· '+pend+' cruce'+(pend===1?'':'s')+' sin ganador. Toca al ganador de cada cruce.</span>';
+      }else{
+        el.progreso.innerHTML='';
       }
     }
     campeonPrevio=cid;
+    el.btnTardias.hidden=!!cid;
+    pintarProximo();
+    pintarPrevios();
   }
 
   function render(){
@@ -407,27 +760,217 @@ textarea:focus{border-color:var(--acento);outline:none}
     el.vLl.hidden=!enLlaves;
     el.btnReiniciar.hidden=!enLlaves;
     el.btnEditar.hidden=!enLlaves;
+    el.btnImprimir.hidden=!enLlaves;
+    el.btnProyector.hidden=!enLlaves;
+    el.btnTardias.hidden=!enLlaves;
+    if(!enLlaves&&proyector) salirProyector();
     if(enLlaves){ pintarFranja(); pintarLlaves(); }
-    else{ pintarLista(); }
+    else{ el.chkTercero.checked=estado.conTercero; pintarLista(); pintarPrevios(); }
     sincronizarCanciones();
     pintarRuleta();
   }
 
   /* ---------- Eventos: inscripción ---------- */
-  function agregar(){
-    var v=el.nuevo.value.replace(/\s+/g,' ').trim();
-    if(!v){aviso('Escribe un nombre antes de agregar.');return}
-    if(estado.jugadores.length>=MAX){aviso('El máximo es '+MAX+' participantes.');return}
-    var repetido=estado.jugadores.some(function(j){return j.nombre.toLowerCase()===v.toLowerCase()});
-    if(repetido){aviso('Ese nombre ya está inscrito. Agrega un apodo para distinguirlos.');return}
+  function limpiarTexto(t,max){return t.replace(/\s+/g,' ').trim().slice(0,max)}
+
+  function parseEntrada(t){
+    var nombre=t.replace(/\s+/g,' ').trim().slice(0,NOM).trim();
+    return nombre?{nombre:nombre}:null;
+  }
+  function existeNombre(nombre,exceptoId){
+    var k=nombre.toLowerCase();
+    return estado.jugadores.some(function(j){return j.id!==exceptoId&&j.nombre.toLowerCase()===k});
+  }
+  function nuevoJugador(e){
     var id=estado.sig++;
-    estado.jugadores.push({id:id,nombre:v,color:COLORES[(id-1)%COLORES.length]});
+    estado.jugadores.push({id:id,nombre:e.nombre,color:COLORES[(id-1)%COLORES.length]});
+  }
+
+  /* ---------- Llegadas tardías: se ubican solas mientras el torneo está en marcha ---------- */
+  function nombreDe(id){var j=porId(id);return j?j.nombre:'—'}
+  function unir(lista){
+    if(lista.length<2) return lista.join('');
+    return lista.slice(0,-1).join(', ')+' y '+lista[lista.length-1];
+  }
+  /* Pases libres de la primera ronda cuyo cruce siguiente aún no se ha jugado ni tiene canción asignada. */
+  function libresTardios(){
+    var R=estado.rondas, out=[];
+    if(!R||R.length<2) return out;
+    R[0].forEach(function(m,i){
+      if(!m.libre) return;
+      var s=R[1][i>>1];
+      if(s.g!==null||s.c) return;
+      out.push(i);
+    });
+    out.sort(function(x,y){
+      var kx=R[0][x^1].libre?1:0, ky=R[0][y^1].libre?1:0;   // primero donde el rival siguiente ya bailó
+      return kx!==ky?kx-ky:x-y;
+    });
+    return out;
+  }
+  /* Cruces pendientes de la primera ronda donde se puede armar una llave previa. */
+  function anclasTardias(){
+    var R=estado.rondas, out=[];
+    if(!R||R.length<2) return out;
+    var P=estado.previos||[];
+    R[0].forEach(function(m,i){
+      if(m.libre||m.g!==null||!m.a||!m.b) return;
+      if(P.some(function(p){return p.dest===i})) return;
+      var s=R[1][i>>1];
+      if(s.g!==null||s.c) return;
+      out.push(i);
+    });
+    return out;
+  }
+  function planTardias(nombres,anclaIdx){
+    var libres=libresTardios(), plan={directos:[],cadena:null,sinLugar:[]};
+    var i=0;
+    while(i<nombres.length&&i<libres.length){ plan.directos.push({idx:libres[i],nombre:nombres[i]}); i++; }
+    var resto=nombres.slice(i);
+    if(resto.length){
+      var anclas=anclasTardias();
+      var idx=(anclas.indexOf(anclaIdx)>=0)?anclaIdx:anclas[anclas.length-1];
+      if(idx===undefined) plan.sinLugar=resto;
+      else plan.cadena={ancla:idx,nombres:resto};
+    }
+    return plan;
+  }
+  function aplicarTardias(plan){
+    var R=estado.rondas;
+    function crear(nombre){
+      var id=estado.sig++;
+      estado.jugadores.push({id:id,nombre:nombre,color:COLORES[(id-1)%COLORES.length]});
+      return id;
+    }
+    plan.directos.forEach(function(d){
+      var id=crear(d.nombre), m=R[0][d.idx];
+      m.b=id; m.g=null; m.libre=false; delete m.c;
+    });
+    if(plan.cadena){
+      var idxA=plan.cadena.ancla, m=R[0][idxA];
+      var lista=plan.cadena.nombres.map(crear);
+      lista.push(m.b);                          // quien ya estaba en ese cruce entra a la llave con su pase al final
+      m.b=null; m.g=null; delete m.c;
+      var P=estado.previos=estado.previos||[];
+      var nodos=lista.map(function(id){return {id:id}});
+      while(nodos.length>1){
+        var sig=[];
+        for(var k=0;k<nodos.length;k+=2){
+          if(k+1>=nodos.length){sig.push(nodos[k]);continue}
+          var A=nodos[k], B=nodos[k+1];
+          var q={a:A.q?null:A.id,b:B.q?null:B.id,g:null,libre:false};
+          P.push(q);
+          var qi=P.length-1;
+          if(A.q){A.q.destP=qi;A.q.lado='a'}
+          if(B.q){B.q.destP=qi;B.q.lado='b'}
+          sig.push({q:q});
+        }
+        nodos=sig;
+      }
+      nodos[0].q.dest=idxA;
+    }
+    recalcular(); guardar(); render();
+  }
+
+  function nombresTardios(){
+    var vistos={}, out=[];
+    el.tNombres.value.split(/\r?\n/).forEach(function(t){
+      var e=parseEntrada(t); if(!e) return;
+      var k=e.nombre.toLowerCase();
+      if(vistos[k]||existeNombre(e.nombre,0)) return;
+      vistos[k]=1; out.push(e.nombre);
+    });
+    return out.slice(0,Math.max(0,MAX-estado.jugadores.length));
+  }
+  function actualizarTardias(){
+    var R=estado.rondas, nombres=nombresTardios();
+    var anclas=anclasTardias(), libres=libresTardios();
+    var opts=anclas.map(function(i){
+      var m=R[0][i];
+      return '<option value="'+i+'">'+esc(nombreDe(m.a))+' contra '+esc(nombreDe(m.b))+'</option>';
+    }).join('');
+    if(el.tAncla.getAttribute('data-h')!==opts){
+      var previo=el.tAncla.value;
+      el.tAncla.innerHTML=opts; el.tAncla.setAttribute('data-h',opts);
+      el.tAncla.value=(anclas.map(String).indexOf(previo)>=0)?previo:String(anclas[anclas.length-1]);
+    }
+    el.tAnclaWrap.hidden=!(nombres.length>libres.length&&anclas.length>1);
+    var plan=planTardias(nombres,el.tAncla.value===''?-1:Number(el.tAncla.value));
+    var t=[];
+    if(plan.directos.length){
+      t.push('Entran directo a la primera ronda: '+unir(plan.directos.map(function(d){
+        return d.nombre+' contra '+nombreDe(R[0][d.idx].a);
+      }))+'.');
+    }
+    if(plan.cadena){
+      var m=R[0][plan.cadena.ancla];
+      t.push('Llave previa entre '+unir(plan.cadena.nombres.concat([nombreDe(m.b)]))+
+        '. Quien gane juega contra '+nombreDe(m.a)+'.');
+    }
+    if(plan.sinLugar.length){
+      t.push('No hay dónde ubicar a '+unir(plan.sinLugar)+': los cruces siguientes ya se jugaron o tienen canción asignada.');
+    }
+    if(!nombres.length&&el.tNombres.value.trim()){
+      t.push('Esos nombres ya están en la lista o no son válidos.');
+    }
+    el.tResumen.textContent=t.join(' ');
+    el.tSi.disabled=!(plan.directos.length||plan.cadena);
+    return {nombres:nombres,plan:plan};
+  }
+  function cerrarTardias(){el.mT.hidden=true}
+  el.btnTardias.addEventListener('click',function(){
+    if(!estado.rondas) return;
+    el.tNombres.value='';
+    el.mT.hidden=false;
+    actualizarTardias();
+    el.tNombres.focus();
+  });
+  el.tNombres.addEventListener('input',actualizarTardias);
+  el.tAncla.addEventListener('change',actualizarTardias);
+  el.tNo.addEventListener('click',cerrarTardias);
+  el.mT.addEventListener('click',function(e){if(e.target===el.mT)cerrarTardias()});
+  el.tSi.addEventListener('click',function(){
+    var r=actualizarTardias();
+    if(!r.plan.directos.length&&!r.plan.cadena) return;
+    var agregados=r.plan.directos.length+(r.plan.cadena?r.plan.cadena.nombres.length:0);
+    cerrarTardias();
+    aplicarTardias(r.plan);
+    msgGlobal('Se agregaron '+agregados+' participante'+(agregados===1?'':'s')+' a las llaves.'+
+      (r.plan.sinLugar.length?' Sin lugar: '+unir(r.plan.sinLugar)+'.':''));
+  });
+
+  el.chkTercero.addEventListener('change',function(){estado.conTercero=el.chkTercero.checked;guardar()});
+
+  function agregar(){
+    var e=parseEntrada(el.nuevo.value);
+    if(!e){aviso('Escribe un nombre antes de agregar.');return}
+    if(estado.jugadores.length>=MAX){aviso('El máximo es '+MAX+' '+VARIOS+'.');return}
+    if(existeNombre(e.nombre,0)){aviso('Ese nombre ya está en la lista. Agrega un apodo para distinguirlos.');return}
+    nuevoJugador(e);
     el.nuevo.value='';
     aviso('');
     guardar(); pintarLista(); el.nuevo.focus();
   }
   el.btnAgregar.addEventListener('click',agregar);
   el.nuevo.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();agregar()}});
+
+  function agregarVarios(){
+    var partes=el.masivo.value.split(/\r?\n|;|,|\t/);
+    var agregados=0, repetidos=0, sobrantes=0;
+    partes.forEach(function(t){
+      var e=parseEntrada(t); if(!e) return;
+      if(existeNombre(e.nombre,0)){repetidos++;return}
+      if(estado.jugadores.length>=MAX){sobrantes++;return}
+      nuevoJugador(e); agregados++;
+    });
+    if(!agregados&&!repetidos&&!sobrantes){aviso('Pega o escribe al menos un nombre, uno por línea.');return}
+    var msg='Se agregaron '+agregados+' '+plural(agregados,UNO,VARIOS)+'.';
+    if(repetidos) msg+=' Se '+(repetidos===1?'omitió 1 nombre repetido':'omitieron '+repetidos+' nombres repetidos')+'.';
+    if(sobrantes) msg+=' '+sobrantes+' quedaron fuera por el límite de '+MAX+'.';
+    el.masivo.value='';
+    guardar(); pintarLista(); aviso(msg);
+  }
+  el.btnMasivo.addEventListener('click',agregarVarios);
 
   el.lista.addEventListener('click',function(e){
     var b=e.target.closest('.quitar'); if(!b) return;
@@ -438,10 +981,9 @@ textarea:focus{border-color:var(--acento);outline:none}
   el.lista.addEventListener('change',function(e){
     var inp=e.target; if(inp.tagName!=='INPUT') return;
     var id=Number(inp.getAttribute('data-id')), j=porId(id); if(!j) return;
-    var v=inp.value.replace(/\s+/g,' ').trim();
-    var repetido=estado.jugadores.some(function(o){return o.id!==id&&o.nombre.toLowerCase()===v.toLowerCase()});
-    if(!v||repetido){
-      aviso(!v?'El nombre no puede quedar vacío.':'Ese nombre ya está inscrito. Agrega un apodo para distinguirlos.');
+    var v=limpiarTexto(inp.value,NOM);
+    if(!v||existeNombre(v,id)){
+      aviso(!v?'El nombre no puede quedar vacío.':'Ese nombre ya está en la lista. Agrega un apodo para distinguirlos.');
       inp.value=j.nombre; return;
     }
     aviso(''); j.nombre=v; inp.value=v; guardar();
@@ -462,16 +1004,6 @@ textarea:focus{border-color:var(--acento);outline:none}
     window.scrollTo(0,0);
   });
 
-  /* ---------- Eventos: llaves ---------- */
-  el.llaves.addEventListener('click',function(e){
-    var b=e.target.closest('button.fila'); if(!b||b.disabled) return;
-    var r=Number(b.getAttribute('data-r')), i=Number(b.getAttribute('data-i')), id=Number(b.getAttribute('data-id'));
-    var m=estado.rondas[r][i];
-    if(m.libre||!m.a||!m.b) return;
-    m.g=(m.g===id)?null:id;
-    recalcular(); guardar(); pintarLlaves();
-  });
-
   /* Botón de doble confirmación */
   function doble(btn,accion){
     var textoOriginal=btn.textContent, temporizador=null;
@@ -485,11 +1017,222 @@ textarea:focus{border-color:var(--acento);outline:none}
       temporizador=setTimeout(function(){btn.removeAttribute('data-pend');btn.textContent=textoOriginal},4000);
     });
   }
+  doble(el.btnVaciar,function(){estado.jugadores=[];aviso('');guardar();pintarLista()});
   doble(el.btnReiniciar,function(){campeonPrevio=null;limpiarRuleta();generar();guardar();render()});
-  doble(el.btnEditar,function(){estado.rondas=null;campeonPrevio=null;guardar();render()});
+  doble(el.btnEditar,function(){estado.rondas=null;estado.tercero=null;estado.previos=[];campeonPrevio=null;guardar();render()});
+
+  /* ---------- Reset total ---------- */
+  function estadoInicial(){
+    return {
+      nombre:'Torneo Just Dance',jugadores:[],rondas:null,sig:1,
+      canciones:[],cancionesRonda:{},usadasRonda:{},rondaRuleta:null,sinRepetir:true,ultima:'',
+      conTercero:false,tercero:null,previos:[]
+    };
+  }
+  el.btnResetTotal.addEventListener('click',function(){
+    pedirConfirmacion(
+      '¿Borrar todo y empezar de cero?',
+      'Se borrarán los participantes, las llaves, los resultados, las canciones y el nombre del torneo guardados en este navegador. Esta acción no se puede deshacer. Si quieres conservar una copia, descarga antes el respaldo.',
+      'Sí, borrar todo',
+      function(){
+        estado=estadoInicial();
+        try{localStorage.removeItem(CLAVE)}catch(e){}
+        campeonPrevio=null; giro=0; girando=false;
+        el.rueda.style.transition='none'; el.rueda.style.transform='rotate(0deg)';
+        el.masivo.value=''; el.nuevo.value=''; el.avisoRuleta.textContent=''; aviso('');
+        render();
+        window.scrollTo(0,0);
+        msgGlobal('Se borró todo. Ya puedes empezar un torneo nuevo.');
+      }
+    );
+  });
 
   el.nombre.addEventListener('input',function(){
     estado.nombre=el.nombre.value; document.title=estado.nombre||'Torneo de Just Dance'; guardar();
+  });
+
+  /* ---------- Modo proyector ---------- */
+  var proyector=false, pantallaCompleta=false;
+  function entrarProyector(){
+    proyector=true;
+    document.body.classList.add('proyector');
+    el.btnSalirProy.hidden=false;
+    try{
+      var d=document.documentElement;
+      if(d.requestFullscreen){
+        var p=d.requestFullscreen();
+        if(p&&p.then) p.then(function(){pantallaCompleta=true}).catch(function(){});
+      }
+    }catch(e){}
+  }
+  function salirProyector(){
+    proyector=false;
+    document.body.classList.remove('proyector');
+    el.btnSalirProy.hidden=true;
+    var estabaCompleta=pantallaCompleta;
+    pantallaCompleta=false;
+    try{ if(estabaCompleta&&document.fullscreenElement&&document.exitFullscreen) document.exitFullscreen() }catch(e){}
+  }
+  el.btnProyector.addEventListener('click',entrarProyector);
+  el.btnSalirProy.addEventListener('click',salirProyector);
+  document.addEventListener('fullscreenchange',function(){
+    if(!document.fullscreenElement&&proyector&&pantallaCompleta) salirProyector();
+  });
+
+  /* ---------- Imprimir o guardar como PDF ---------- */
+  el.btnImprimir.addEventListener('click',function(){ window.print() });
+  window.addEventListener('beforeprint',function(){
+    var w=el.llaves.scrollWidth, disponible=1000;
+    el.llaves.style.zoom=(w>disponible)?String(disponible/w):'';
+  });
+  window.addEventListener('afterprint',function(){ el.llaves.style.zoom='' });
+
+  /* ---------- Respaldo: exportar e importar ---------- */
+  function fechaHoy(){return new Date().toISOString().slice(0,10)}
+  function nombreArchivo(){
+    var base=(estado.nombre||'torneo').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40)||'torneo';
+    return base+'-'+fechaHoy()+'.json';
+  }
+  el.btnExportar.addEventListener('click',function(){
+    try{
+      var datos=JSON.stringify({app:'torneo-just-dance',version:2,exportado:new Date().toISOString(),estado:estado},null,2);
+      var blob=new Blob([datos],{type:'application/json'});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a');
+      a.href=url; a.download=nombreArchivo();
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){URL.revokeObjectURL(url)},1500);
+      msgGlobal('Respaldo descargado: '+nombreArchivo()+'. Guárdalo en un lugar seguro.');
+    }catch(e){
+      msgGlobal('No se pudo crear el respaldo en este navegador.');
+    }
+  });
+
+  function entero(v){return typeof v==='number'&&isFinite(v)&&Math.floor(v)===v}
+  function listaTextos(v){
+    if(!Array.isArray(v)) return [];
+    return v.filter(function(x){return typeof x==='string'});
+  }
+  function limpiarCruce(c,ids){
+    c=(c&&typeof c==='object')?c:{};
+    var idv=function(v){return (entero(v)&&ids[v])?v:null};
+    var m={a:idv(c.a),b:idv(c.b),g:idv(c.g),libre:c.libre===true};
+    if(m.g!==null&&m.g!==m.a&&m.g!==m.b) m.g=null;
+    if(typeof c.c==='string'&&c.c) m.c=c.c.slice(0,60);
+    return m;
+  }
+  /* Revisa y limpia el contenido del archivo antes de usarlo: no se confía en nada de lo que trae. */
+  function limpiarEstado(o){
+    if(!o||typeof o!=='object') return null;
+    if(o.estado&&typeof o.estado==='object') o=o.estado;
+    if(!Array.isArray(o.jugadores)) return null;
+    var n={
+      nombre:(typeof o.nombre==='string'&&o.nombre.trim())?o.nombre.trim().slice(0,50):'Torneo Just Dance',
+      jugadores:[],rondas:null,sig:1
+    };
+    var ids={};
+    o.jugadores.slice(0,MAX).forEach(function(j){
+      if(!j||typeof j.nombre!=='string'||!entero(j.id)||j.id<1||ids[j.id]) return;
+      var nom=limpiarTexto(j.nombre,NOM); if(!nom) return;
+      ids[j.id]=1;
+      n.jugadores.push({
+        id:j.id,nombre:nom,
+        color:(typeof j.color==='string'&&/^#[0-9a-f]{6}$/i.test(j.color))?j.color:COLORES[j.id%COLORES.length]
+      });
+      if(j.id>=n.sig) n.sig=j.id+1;
+    });
+    if(!n.jugadores.length) return null;
+    n.conTercero=o.conTercero===true;
+    n.canciones=parsearCanciones(listaTextos(o.canciones).join('\n'));
+    n.cancionesRonda={}; n.usadasRonda={};
+    if(o.cancionesRonda&&typeof o.cancionesRonda==='object'&&!Array.isArray(o.cancionesRonda)){
+      Object.keys(o.cancionesRonda).forEach(function(k){
+        if(!/^\d{1,2}$/.test(k)) return;
+        var l=parsearCanciones(listaTextos(o.cancionesRonda[k]).join('\n'));
+        if(l.length) n.cancionesRonda[k]=l;
+      });
+    }
+    if(o.usadasRonda&&typeof o.usadasRonda==='object'&&!Array.isArray(o.usadasRonda)){
+      Object.keys(o.usadasRonda).forEach(function(k){
+        if(!/^\d{1,2}$/.test(k)) return;
+        n.usadasRonda[k]=listaTextos(o.usadasRonda[k]).map(function(x){return x.slice(0,60)});
+      });
+    }
+    n.sinRepetir=o.sinRepetir!==false;
+    n.ultima=(typeof o.ultima==='string')?o.ultima.slice(0,60):'';
+    n.rondaRuleta=(entero(o.rondaRuleta)&&o.rondaRuleta>=0)?o.rondaRuleta:null;
+    n.tercero=null; n.previos=[];
+    if(Array.isArray(o.rondas)){
+      var R=[], r, i;
+      for(r=0;r<o.rondas.length;r++){
+        if(!Array.isArray(o.rondas[r])) return null;
+        var f=[];
+        for(i=0;i<o.rondas[r].length;i++) f.push(limpiarCruce(o.rondas[r][i],ids));
+        R.push(f);
+      }
+      var L=R.length?R[0].length:0;
+      if(L<2||L>16||(L&(L-1))!==0) return null;
+      for(r=0;r<R.length;r++){ if(R[r].length!==L/Math.pow(2,r)) return null }
+      if(R[R.length-1].length!==1) return null;
+      n.rondas=R;
+      if(o.tercero&&typeof o.tercero==='object') n.tercero=limpiarCruce(o.tercero,ids);
+      if(Array.isArray(o.previos)&&o.previos.length<=8){
+        var lista=[], valido=true;
+        o.previos.forEach(function(p,k){
+          if(!valido) return;
+          if(!p||typeof p!=='object'){valido=false;return}
+          var q=limpiarCruce(p,ids); q.libre=false;
+          if(entero(p.destP)){
+            if(p.destP<=k||p.destP>=o.previos.length){valido=false;return}
+            q.destP=p.destP; q.lado=(p.lado==='b')?'b':'a';
+          }else if(entero(p.dest)&&p.dest>=0&&p.dest<L){
+            q.dest=p.dest;
+          }else{valido=false;return}
+          lista.push(q);
+        });
+        if(valido) n.previos=lista;
+      }
+    }
+    return n;
+  }
+
+  function aplicarImportacion(n){
+    var previo=estado;
+    estado=n;
+    try{
+      if(estado.rondas) recalcular(); else estado.tercero=null;
+      podarUsadas();
+    }catch(e){
+      estado=previo; msgGlobal('No se pudo importar el respaldo.'); return;
+    }
+    campeonPrevio=null; giro=0;
+    el.rueda.style.transition='none'; el.rueda.style.transform='rotate(0deg)';
+    guardar(); render();
+    window.scrollTo(0,0);
+    msgGlobal('Respaldo importado: «'+estado.nombre+'».');
+  }
+
+  el.btnImportar.addEventListener('click',function(){ el.archivo.click() });
+  el.archivo.addEventListener('change',function(){
+    var f=el.archivo.files&&el.archivo.files[0]; if(!f) return;
+    if(f.size>2*1024*1024){ msgGlobal('El archivo es demasiado grande para ser un respaldo del torneo.'); el.archivo.value=''; return }
+    var lector=new FileReader();
+    lector.onload=function(){
+      var obj=null;
+      try{ obj=JSON.parse(String(lector.result)) }catch(e){}
+      el.archivo.value='';
+      var n=obj?limpiarEstado(obj):null;
+      if(!n){ msgGlobal('El archivo no es un respaldo válido de este torneo.'); return }
+      pedirConfirmacion(
+        '¿Importar este respaldo?',
+        'Se reemplazará el torneo actual por «'+n.nombre+'» ('+n.jugadores.length+' '+plural(n.jugadores.length,UNO,VARIOS)+(n.rondas?', con llaves en marcha':'')+'). Esta acción no se puede deshacer.',
+        'Sí, importar',
+        function(){aplicarImportacion(n)}
+      );
+    };
+    lector.onerror=function(){ el.archivo.value=''; msgGlobal('No se pudo leer el archivo.') };
+    lector.readAsText(f);
   });
 
   /* ---------- Canciones y ruleta ---------- */
@@ -506,29 +1249,96 @@ textarea:focus{border-color:var(--acento);outline:none}
     });
     return out.slice(0,60);
   }
-  function limpiarRuleta(){ estado.usadas=[]; estado.ultima=''; }
-
-  function sincronizarCanciones(){
-    var t=estado.canciones.join('\n');
-    if(document.activeElement!==el.txt1) el.txt1.value=t;
-    if(document.activeElement!==el.txt2) el.txt2.value=t;
-    var n=estado.canciones.length;
-    el.cuenta.textContent=n===0?'Aún no hay canciones.':n+' canción'+(n===1?'':'es')+' en la ruleta.';
+  function iguales(a,b){
+    if(a.length!==b.length) return false;
+    for(var i=0;i<a.length;i++){ if(a[i]!==b[i]) return false }
+    return true;
   }
-  function aplicarCanciones(texto){
-    estado.canciones=parsearCanciones(texto);
-    estado.usadas=estado.usadas.filter(function(c){return estado.canciones.indexOf(c)>=0});
-    if(estado.canciones.indexOf(estado.ultima)<0) estado.ultima='';
-    guardar(); sincronizarCanciones(); pintarRuleta();
-  }
-  el.txt1.addEventListener('change',function(){aplicarCanciones(el.txt1.value)});
-  el.txt2.addEventListener('change',function(){aplicarCanciones(el.txt2.value)});
-
   function corto(t,max){return t.length>max?t.slice(0,max-1)+'…':t}
 
+  /* Las listas por ronda se guardan contando desde la final (0 = final, 1 = semifinal...),
+     así siguen valiendo aunque cambie la cantidad de participantes. */
+  function claveRonda(r){ return estado.rondas.length-1-r }
+  function rondaEnJuego(){
+    var p=proximoCruce();
+    return p?p.r:estado.rondas.length-1;
+  }
+  function rondaActiva(){
+    var R=estado.rondas, s=estado.rondaRuleta;
+    if(typeof s==='number'&&s>=0&&s<R.length) return s;
+    return rondaEnJuego();
+  }
+  function tieneLista(r){
+    var p=estado.cancionesRonda[claveRonda(r)];
+    return Array.isArray(p)&&p.length>0;
+  }
+  function listaDe(r){ return tieneLista(r)?estado.cancionesRonda[claveRonda(r)]:estado.canciones }
+  function usadasDe(r){ return estado.usadasRonda[claveRonda(r)]||[] }
+  function limpiarRuleta(){ estado.usadasRonda={}; estado.ultima=''; }
+
+  function podarUsadas(){
+    if(!estado.rondas) return;
+    for(var r=0;r<estado.rondas.length;r++){
+      var k=claveRonda(r);
+      if(estado.usadasRonda[k]){
+        var lista=listaDe(r);
+        estado.usadasRonda[k]=estado.usadasRonda[k].filter(function(c){return lista.indexOf(c)>=0});
+      }
+    }
+  }
+
+  function sincronizarCanciones(){
+    var g=estado.canciones.join('\n');
+    if(document.activeElement!==el.txt1) el.txt1.value=g;
+    if(document.activeElement!==el.txt3) el.txt3.value=g;
+    var n=estado.canciones.length;
+    el.cuenta.textContent=n===0?'Aún no hay canciones.':n+(n===1?' canción':' canciones')+' en la lista general.';
+    if(estado.rondas&&document.activeElement!==el.txt2) el.txt2.value=listaDe(rondaActiva()).join('\n');
+  }
+
+  function aplicarGeneral(texto){
+    estado.canciones=parsearCanciones(texto);
+    podarUsadas(); guardar(); pintarRuleta();
+  }
+  function aplicarRonda(texto){
+    if(!estado.rondas) return;
+    var k=claveRonda(rondaActiva()), lista=parsearCanciones(texto);
+    if(!lista.length||iguales(lista,estado.canciones)) delete estado.cancionesRonda[k];
+    else estado.cancionesRonda[k]=lista;
+    podarUsadas(); guardar(); pintarRuleta();
+  }
+  el.txt1.addEventListener('change',function(){aplicarGeneral(el.txt1.value)});
+  el.txt3.addEventListener('change',function(){aplicarGeneral(el.txt3.value)});
+  el.txt2.addEventListener('change',function(){aplicarRonda(el.txt2.value)});
+  el.btnGeneral.addEventListener('click',function(){
+    if(!estado.rondas) return;
+    delete estado.cancionesRonda[claveRonda(rondaActiva())];
+    el.txt2.value='';
+    podarUsadas(); guardar(); pintarRuleta();
+  });
+
   function pintarRuleta(){
-    var C=estado.canciones, n=C.length, R=150, h='';
+    sincronizarCanciones();
+    if(!estado.rondas) return;
+    var R=estado.rondas, total=R.length, act=rondaActiva();
+    var C=listaDe(act), usadas=usadasDe(act), n=C.length, RAD=150, h='';
+    var nombreAct=nombreRonda(act,total);
+    var pr=proximoCruce();
+    var etiquetaAuto=(pr&&pr.ref==='t')?'Tercer lugar, con la lista de la Final':nombreRonda(rondaEnJuego(),total);
+
+    var opts='<option value="auto">Ronda en juego ('+esc(etiquetaAuto)+')</option>';
+    for(var r=0;r<total;r++){
+      opts+='<option value="'+r+'">'+esc(nombreRonda(r,total))+(tieneLista(r)?' (lista propia)':'')+'</option>';
+    }
+    if(el.sel.getAttribute('data-h')!==opts){ el.sel.innerHTML=opts; el.sel.setAttribute('data-h',opts); }
+    el.sel.value=(typeof estado.rondaRuleta==='number'&&estado.rondaRuleta>=0&&estado.rondaRuleta<total)?String(estado.rondaRuleta):'auto';
+    el.sel.disabled=girando;
+
     el.chk.checked=estado.sinRepetir;
+    el.rotulo.textContent='Canciones para: '+nombreAct;
+    el.btnGeneral.hidden=!tieneLista(act);
+    el.info.textContent=nombreAct+': usa '+(tieneLista(act)?'su propia lista':'la lista general')+' ('+n+(n===1?' canción':' canciones')+').';
+
     if(n===0){
       h='<circle r="150" fill="var(--hueco)" stroke="var(--line)" stroke-width="3"/>'+
         '<text text-anchor="middle" y="5" fill="var(--muted)" font-size="15" font-family="Figtree,Arial,sans-serif">Sin canciones</text>';
@@ -536,14 +1346,14 @@ textarea:focus{border-color:var(--acento);outline:none}
       var a=360/n;
       for(var k=0;k<n;k++){
         var color=COLORES[k%COLORES.length];
-        var usada=estado.sinRepetir&&estado.usadas.indexOf(C[k])>=0;
+        var usada=estado.sinRepetir&&usadas.indexOf(C[k])>=0;
         var op=usada?0.3:1;
         if(n===1){
           h+='<circle r="150" fill="'+color+'" opacity="'+op+'"/>';
         }else{
           var t1=(k*a)*Math.PI/180, t2=((k+1)*a)*Math.PI/180;
-          var x1=R*Math.sin(t1), y1=-R*Math.cos(t1), x2=R*Math.sin(t2), y2=-R*Math.cos(t2);
-          h+='<path d="M0 0 L'+x1.toFixed(2)+' '+y1.toFixed(2)+' A'+R+' '+R+' 0 '+(a>180?1:0)+' 1 '+x2.toFixed(2)+' '+y2.toFixed(2)+' Z" fill="'+color+'" opacity="'+op+'" stroke="#fff" stroke-width="2"/>';
+          var x1=RAD*Math.sin(t1), y1=-RAD*Math.cos(t1), x2=RAD*Math.sin(t2), y2=-RAD*Math.cos(t2);
+          h+='<path d="M0 0 L'+x1.toFixed(2)+' '+y1.toFixed(2)+' A'+RAD+' '+RAD+' 0 '+(a>180?1:0)+' 1 '+x2.toFixed(2)+' '+y2.toFixed(2)+' Z" fill="'+color+'" opacity="'+op+'" stroke="#fff" stroke-width="2"/>';
         }
         if(n<=16){
           var mid=(k+0.5)*a, tam=n<=8?15:11;
@@ -554,50 +1364,68 @@ textarea:focus{border-color:var(--acento);outline:none}
       h+='<circle r="14" fill="#fff" stroke="#1a1046" stroke-width="3"/>';
     }
     el.rueda.innerHTML=h;
+
     if(estado.ultima){
       el.cancionActual.className='cancion';
       el.cancionActual.textContent=estado.ultima;
     }else{
       el.cancionActual.className='cancion vacia';
-      el.cancionActual.textContent=n===0?'Agrega canciones en la lista para poder girar.':'Aún no ha salido ninguna canción.';
+      el.cancionActual.textContent=n===0?'Agrega canciones a la lista para poder girar.':'Aún no ha salido ninguna canción.';
     }
     el.btnGirar.disabled=girando||n===0;
   }
 
   function girar(){
-    if(girando) return;
-    var C=estado.canciones; if(!C.length) return;
+    if(girando||!estado.rondas) return;
+    var act=rondaActiva(), C=listaDe(act).slice(), clave=claveRonda(act);
+    if(!C.length) return;
     el.avisoRuleta.textContent='';
+    var usadas=estado.usadasRonda[clave]||[];
     var disp=[];
-    C.forEach(function(c,k){ if(!estado.sinRepetir||estado.usadas.indexOf(c)<0) disp.push(k) });
+    C.forEach(function(c,k){ if(!estado.sinRepetir||usadas.indexOf(c)<0) disp.push(k) });
     if(!disp.length){
-      estado.usadas=[];
+      usadas=[]; estado.usadasRonda[clave]=usadas;
       disp=C.map(function(c,k){return k});
-      el.avisoRuleta.textContent='Ya salieron todas las canciones. La ruleta vuelve a empezar.';
+      el.avisoRuleta.textContent='Ya salieron todas las canciones de esta ronda. La ruleta vuelve a empezar.';
     }
+    /* La canción se liga al siguiente cruce solo si la ruleta está girando para su misma ronda. */
+    var pr=proximoCruce();
+    var destino=(pr&&pr.r===act)?pr.m:null;
+
     var k=disp[Math.floor(Math.random()*disp.length)];
     var a=360/C.length;
     var objetivo=(360-((k+0.5)*a+(Math.random()-0.5)*a*0.6)+720)%360;
     var actual=((giro%360)+360)%360;
     var delta=(objetivo-actual+360)%360;
     giro+=1800+delta;
-    girando=true; el.btnGirar.disabled=true;
+    girando=true; el.btnGirar.disabled=true; el.sel.disabled=true;
     el.rueda.style.transition=reducido?'none':'transform 4.5s cubic-bezier(.12,.6,.1,1)';
     el.rueda.style.transform='rotate('+giro+'deg)';
     var fin=function(){
       if(!girando) return;
       girando=false;
       estado.ultima=C[k];
-      if(estado.usadas.indexOf(C[k])<0) estado.usadas.push(C[k]);
+      var u=estado.usadasRonda[clave]||[];
+      if(u.indexOf(C[k])<0) u.push(C[k]);
+      estado.usadasRonda[clave]=u;
+      if(destino) destino.c=C[k];
       guardar(); pintarRuleta();
+      if(estado.rondas) pintarLlaves();
     };
     if(reducido) fin(); else setTimeout(fin,4700);
   }
   el.btnGirar.addEventListener('click',girar);
   el.chk.addEventListener('change',function(){estado.sinRepetir=el.chk.checked;guardar();pintarRuleta()});
+  el.sel.addEventListener('change',function(){
+    estado.rondaRuleta=el.sel.value==='auto'?null:Number(el.sel.value);
+    el.avisoRuleta.textContent='';
+    guardar(); pintarRuleta();
+  });
   el.btnReiniciarRuleta.addEventListener('click',function(){
-    if(girando) return;
-    limpiarRuleta(); el.avisoRuleta.textContent=''; guardar(); pintarRuleta();
+    if(girando||!estado.rondas) return;
+    delete estado.usadasRonda[claveRonda(rondaActiva())];
+    estado.ultima=''; el.avisoRuleta.textContent='';
+    guardar(); pintarRuleta();
   });
 
   render();
